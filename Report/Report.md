@@ -1,3 +1,14 @@
+# **Scraper original mass: a different approach and its wide range implementation**
+
+Guillermo Bustos-Pérez $^{(1,2,3)}$
+
+$^{(1)}$ Department of Human Origins, Max Planck Institute for
+Evolutionary Anthropology, Leipzig.  
+$^{(2)}$ Institut Català de Paleoecologia Humana i Evolució Social
+(IPHES-CERCA), Tarragona, Spain.  
+$^{(3)}$ Departament d’Història i Història de l’Art, Universitat Rovira
+i Virgili, Tarragona, Spain.
+
 <div align="justify">
 
 ## **Abstract**
@@ -103,7 +114,13 @@ significantly, with r2 values dropping to 0.403
 \[[30](#ref-davis_quantifying_1998)\] (0.224 for the same retouched
 flakes), and 0.384 \[[31](#ref-shott_flake_2000)\]. These results meant
 an important drawback since, as Dibble
-\[[32](#ref-dibble_comment_1998)\]
+\[[32](#ref-dibble_comment_1998)\] states: “controlled experiments, in
+spite of their elegance, objectivity and replicability, are only useful
+if the results obtained from them are directly applicable to
+archaeological materials”.
+
+To overcome the limitations from these results, three approaches are
+commonly undertaken:
 
 # **References**
 
