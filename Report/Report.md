@@ -37,8 +37,9 @@ precise machine learning model for predicting initial mass of flake
 blanks successively retouched into scrapers.
 
 **Key words:** experimental archaeology; lithic reduction; flake mass;
-machine learning.  
-\# **Introduction**
+machine learning.
+
+## **Introduction**
 
 Scrapers are some of the most common lithic implements among
 archaeological lithic assemblages. They are present from the first
@@ -122,7 +123,77 @@ archaeological materials”.
 To overcome the limitations from these results, three approaches are
 commonly undertaken:
 
-# **References**
+1)  Adding additional features as predictive variables. Commonly flake
+    thickness is added
+    \[[19](#ref-shott_use_2017),[33](#ref-dogandzic_edge_2015)\], since
+    it is widely considered to remain unaltered through the reduction
+    process. Other variables, such as scar count or remaining amount of
+    cortex, seem to improve the predictive power of models
+    \[[34](#ref-bustos-perez_predicting_2021),[35](#ref-bustos-perez_multiple_2022)\].  
+2)  Applying new methods for measuring more accurately existing
+    variables. Examples are the refinement on traditional manual
+    measurements of platform \[[36](#ref-muller_new_2016)\], the use of
+    digital photographs \[[37](#ref-braun_landscape-scale_2008)\], or 3D
+    scans for measuring platform
+    \[[38](#ref-clarkson_estimating_2011),[39](#ref-maloney_experimental_2020)\].  
+3)  Applying different families of transformations in order to favor the
+    Gaussian distribution of values of predictors and flake mass, thus
+    increasing the predictive power of most models. These
+    transformations usually use the cubic root
+    \[[29](#ref-li_synthesis_2023),[33](#ref-dogandzic_edge_2015),[40](#ref-dogandzic_results_2020)\]
+    or different logarithmic transformations
+    \[[30](#ref-davis_quantifying_1998),[31](#ref-shott_flake_2000),[34](#ref-bustos-perez_predicting_2021),[35](#ref-bustos-perez_multiple_2022),[38](#ref-clarkson_estimating_2011),[39](#ref-maloney_experimental_2020)\].
+
+It can be considered that these additions and improvements have provided
+correlation values of original flake mass on scrapers which allow for
+comparisons at the assemblage level. However, estimations at the
+individual stone artifact level remain unsatisfactory with a limited
+application to archaeological cases. This is due to three main reasons.
+First, while most research explores extensively the prediction of mass
+through different variables (and their interactions), it is usually not
+considered in the frame of continuous resharpening process, and when it
+is tested in this framework (continuous or single episodes of retouch),
+results provide lower correlation values
+\[[32](#ref-dibble_comment_1998),[39](#ref-maloney_experimental_2020)\].
+Second, while most research aims at estimating original flake mass, less
+research provides results of estimations of percentage of mass lost
+against actual percentage of mass lost during retouch, which is the key
+component of the curated concept
+\[[6](#ref-shott_measuring_2007),[12](#ref-shott_exegesis_1996)\].
+Third, most archaeological research addressing the prediction of
+original flake/scraper mass result in equations which might be difficult
+to extrapolate and practically apply other archaeological assemblages
+\[[19](#ref-shott_use_2017),[30](#ref-davis_quantifying_1998),[41](#ref-morales_distribution_2016)\].
+Recently
+\[[34](#ref-bustos-perez_predicting_2021),[35](#ref-bustos-perez_multiple_2022)\],
+the use of machine learning has allowed the implementation of feature
+selection (identification of how many and which variables are better for
+prediction) and new algorithms. However, it has also resulted in limited
+improvements of the correlation coefficient
+\[[35](#ref-bustos-perez_multiple_2022)\], indicating that a possible
+threshold limit for this approach is being reached.
+
+A new framework is needed to overcome the limitations of previous models
+(absence of being tested in sequential experimentations, higher
+accuracy, and easy implementation for all lithic analysts) aimed at
+predicting original flake mass from scraper attributes and being able to
+reach the individual scraper level. In the present study 134 flakes were
+successively retouched, providing a dataset of 694 episodes of
+resharpening. After each retouch episode, a series of attributes were
+measured and used to train four machine learning models. A Random Forest
+model provided the highest r2 value (0.974) when estimating scraper
+original mass, and the highest r2 (0.839) when estimating percentage of
+mass lost by retouch. The Random Forest model and all training data are
+implemented through a Shiny app “Original Scraper Mass Calculator
+v.1.0”, which allows the user to manually introduce the data from a
+scraper to estimate its original mass or to upload all data at once and
+download the results.
+
+## **Materials and methods.**
+
+### **Experimental sample.**
+
+## **References**
 
 </div>
 
@@ -455,6 +526,99 @@ Lithic Curation: An Experimental Test of Dibble and Pelcin’s Original
 Flake-Tool Mass Predictor,” by Zachary J. Davis and John J. Shea.
 Journal of Archaeological Science. 1998;25: 611–613.
 doi:[10.1006/jasc.1997.0254](https://doi.org/10.1006/jasc.1997.0254)</span>
+
+</div>
+
+<div id="ref-dogandzic_edge_2015" class="csl-entry">
+
+<span class="csl-left-margin">33.
+</span><span class="csl-right-inline">Dogandžić T, Braun DR, McPherron
+SP. Edge Length and Surface Area of a Blank: Experimental Assessment of
+Measures, Size Predictions and Utility. PLoS ONE. 2015;10: e0133984.
+doi:[10.1371/journal.pone.0133984](https://doi.org/10.1371/journal.pone.0133984)</span>
+
+</div>
+
+<div id="ref-bustos-perez_predicting_2021" class="csl-entry">
+
+<span class="csl-left-margin">34.
+</span><span class="csl-right-inline">Bustos-Pérez G, Baena J.
+Predicting Flake Mass: A View from Machine Learning. Lithic Technology.
+2021;46: 130–142.
+doi:[10.1080/01977261.2021.1881267](https://doi.org/10.1080/01977261.2021.1881267)</span>
+
+</div>
+
+<div id="ref-bustos-perez_multiple_2022" class="csl-entry">
+
+<span class="csl-left-margin">35.
+</span><span class="csl-right-inline">Bustos-Pérez G, Baena Preysler J.
+Multiple approaches to predicting flake mass. Journal of Archaeological
+Science: Reports. 2022;46: 103698.
+doi:[10.1016/j.jasrep.2022.103698](https://doi.org/10.1016/j.jasrep.2022.103698)</span>
+
+</div>
+
+<div id="ref-muller_new_2016" class="csl-entry">
+
+<span class="csl-left-margin">36.
+</span><span class="csl-right-inline">Muller A, Clarkson C. A new method
+for accurately and precisely measuring flake platform area. Journal of
+Archaeological Science: Reports. 2016;8: 178–186.
+doi:[10.1016/j.jasrep.2016.06.015](https://doi.org/10.1016/j.jasrep.2016.06.015)</span>
+
+</div>
+
+<div id="ref-braun_landscape-scale_2008" class="csl-entry">
+
+<span class="csl-left-margin">37.
+</span><span class="csl-right-inline">Braun DR, Rogers MJ, Harris JWK,
+Walker SJ. Landscape-scale variation in hominin tool use: Evidence from
+the Developed Oldowan. Journal of Human Evolution. 2008;55: 1053–1063.
+doi:[10.1016/j.jhevol.2008.05.020](https://doi.org/10.1016/j.jhevol.2008.05.020)</span>
+
+</div>
+
+<div id="ref-clarkson_estimating_2011" class="csl-entry">
+
+<span class="csl-left-margin">38.
+</span><span class="csl-right-inline">Clarkson C, Hiscock P. Estimating
+original flake mass from 3D scans of platform area. Journal of
+Archaeological Science. 2011;38: 1062–1068.
+doi:[10.1016/j.jas.2010.12.001](https://doi.org/10.1016/j.jas.2010.12.001)</span>
+
+</div>
+
+<div id="ref-maloney_experimental_2020" class="csl-entry">
+
+<span class="csl-left-margin">39.
+</span><span class="csl-right-inline">Maloney TR. Experimental and
+archaeological testing with 3D laser scanning reveals the limits of
+I/TMC as a reduction index for global scraper and point studies. Journal
+of Archaeological Science: Reports. 2020;29: 102068.
+doi:[10.1016/j.jasrep.2019.102068](https://doi.org/10.1016/j.jasrep.2019.102068)</span>
+
+</div>
+
+<div id="ref-dogandzic_results_2020" class="csl-entry">
+
+<span class="csl-left-margin">40.
+</span><span class="csl-right-inline">Dogandžić T, Abdolazadeh A, Leader
+G, Li L, McPherron SP, Tennie C, et al. The results of lithic
+experiments performed on glass cores are applicable to other raw
+materials. Archaeological and Anthropological Sciences. 2020;12: 44.
+doi:[10.1007/s12520-019-00963-9](https://doi.org/10.1007/s12520-019-00963-9)</span>
+
+</div>
+
+<div id="ref-morales_distribution_2016" class="csl-entry">
+
+<span class="csl-left-margin">41.
+</span><span class="csl-right-inline">Morales JI. Distribution patterns
+of stone-tool reduction: Establishing frames of reference to approximate
+occupational features and formation processes in Paleolithic societies.
+Journal of Anthropological Archaeology. 2016;41: 231–245.
+doi:[10.1016/j.jaa.2016.01.004](https://doi.org/10.1016/j.jaa.2016.01.004)</span>
 
 </div>
 
