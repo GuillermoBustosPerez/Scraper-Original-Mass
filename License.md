@@ -19,12 +19,12 @@ Under the following terms:
   reasonable manner, but not in any way that suggests the license or
   endorses you or your us.
 
-  - **Non Commercial**: You may not use the material for commercial
-    purposes.
+- **Non Commercial**: You may not use the material for commercial
+  purposes.
 
-  - **No additional restrictions**: You may not apply legal terms or
-    technological measures that legally restrict others from doing
-    anything the license permits.
+- **No additional restrictions**: You may not apply legal terms or
+  technological measures that legally restrict others from doing
+  anything the license permits.
 
 Notices:  
 You do not have to comply with the license for elements of the material
