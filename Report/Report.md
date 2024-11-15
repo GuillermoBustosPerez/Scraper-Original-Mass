@@ -344,7 +344,7 @@ retouch, the following variables were recorded:
   mass, maximum thickness (log transformed), average height of
   retouch (t) and value of the GIUR index.
 
-### **2.3 Regression models and evaluation.**
+### **Regression models and evaluation.**
 
 Four methods were employed for regression analysis: multiple linear
 regression, support vector regression with a linear kernel, random
@@ -352,7 +352,188 @@ forest and gradient boosting machine.
 
 Multiple linear regression (MLR) extends the simple linear regression in
 such a way that it can directly accommodate multiple predictors
-\[james_introduction_2013 : 71\].
+\[[45](#ref-james_introduction_2013) : 71\].
+
+Support vector machines for regression
+\[[46](#ref-awad_support_2015)–[48](#ref-smola_tutorial_2004)\] with a
+linear kernel (SVML) fit a linear hyperplane and a margin of error which
+allows for errors of points falling inside the margin. Points falling
+outside the margin define the support vectors. This provides a model
+focused on the general trend which aims to maximize the margin while
+minimizing the error, and which is also robust to the presence of
+outliers.
+
+Random forest for regression selects random samples of the data and
+builds decision trees for prediction \[[49](#ref-breiman_random_2001)\].
+As a result, each tree is built from different combinations of the data,
+and the average is used as prediction. This adds diversity, reduces
+overfit, and provides high-accuracy predictions
+\[[50](#ref-lantz_machine_2019)\].
+
+The gradient boosting machine (GBM) is an ensemble method that builds up
+a final model by incrementally improving an existing one
+\[[51](#ref-friedman_greedy_2001),[52](#ref-friedman_stochastic_2002)\].
+The first model uses an initial *“shallow tree”* with a constant value
+(average of the labels). Following this initial model, a new tree (*weak
+learner*) is fitted to predict the residuals of the model, contributing
+to the final model predictions, allowing for correction of the errors of
+the model. This process is repeated, allowing it to progressively
+identify the shortcomings of week learners on a sequence of decision
+trees and to reduce the errors of the ensemble predictions.
+
+Initial models are trained to estimate original scraper mass based on
+the set of selected attributes. However, as previously stated, the
+objective is to evaluate the ability of a model to predict the curation
+ratio of a stone tool (percentage of mass remaining relative to its
+original mass). Calculating the curation ratio of a stone tool can be
+formulated as:
+
+$$ 100 - ((M/EOM) * 100) $$ Where:  
+M = mass (directly measured on the scraper).  
+EOM = estimated original mass (provided by the model).
+
+Models of both predictions (original scraper mass and curation ratio)
+are compared using four measures of performance: $r^2$, MAE, RMSE, and
+MAPE. $r^2$ is a measure of linear correlation and of how much of the
+observed variation is explained by the model
+\[[45](#ref-james_introduction_2013)\]. In lithic studies, a
+categorization of the predictive power of indices has been proposed
+based on their $r^2$ values, where \<0.1 is low, 0.1–0.25 is moderate,
+0.26–0.5 is fairly large/strong, 0.51–0.8 is very large/strong and \>0.8
+is extremely large/strong. However, it is important to consider that
+different distributions of data can result in same or similar $r^2$
+values \[[53](#ref-anscombe_graphs_1973)\].
+
+Mean average error (MAE), root mean squared error (RMSE), and mean
+average percentual error (MAPE) provide summary values of how far
+predictions fall from the true value
+\[[45](#ref-james_introduction_2013),[50](#ref-lantz_machine_2019)\].
+MAE measures the average magnitude of errors, regardless of signal. RMSE
+also provides a measure of distance between predicted and actual values,
+although it punishes large errors. RMSE is usually compared to the
+standard deviation (SD) of the variable to be predicted. If RMSE
+presents a lower value than the SD, this is indicative of a good model
+which predicts values better than taking the average value of the
+sample. MAPE provides a measure of distance on a proportional basis (a
+residual of 3 g in a 12 g flake will be much higher than in a 50 g
+flake). A perfect model has a MAE, RMSE, and MAPE values of 0, and in
+general, better models will have lower values of MAE, RMSE, and MAPE.
+
+Collinearity of the predictors is addressed through the variance
+inflation factor (VIF). VIF provides a measure of correlation between
+predictors and their effects on the model. In the present study VIF is
+calculated using the R package car v.3.1.2. \[[54](#ref-fox_r_2018)\].
+Common thresholds for VIF values
+\[[55](#ref-marquardt_generalized_1970),[56](#ref-obrien_caution_2007)\]
+range between 1 to 10 (considered inconsequential); 10 to 30 (cause for
+concern), and higher than 30 (seriously harmful). At present, the
+package car v.3.1.2 only allows for the calculation of the variance
+inflation factor for multiple linear regression. Although the different
+nature of the regression algorithms can result in different effects of
+collinearity, results from calculating the variance inflation factor in
+the multiple linear regression can be extrapolated to the rest of the
+models.
+
+Models were evaluated using a k-fold cross validation. In k-fold cross
+validation, the dataset is randomly shuffled and divided into k folds.
+The first fold is employed as a test set, and the model is trained in
+the remaining folds. After this, the second fold is employed as a test
+set and the rest as a new training set. This process continues until all
+folds have served as a test set. Since the samples in each fold are
+determined by the initial random shuffle, it is advisable to repeat this
+cycle a series of times. The present work employs a 10-fold cross
+validation (six folds having a sample of 69 elements, and four folds
+having a sample of 70 elements) which is repeated 50 times with an
+initial random shuffling.
+
+In addition to the above listed performance metrics, all models are
+graphically evaluated. A regression plot provides a scatter plot of
+predicted and true values along its regression line. In a good model,
+the regression line will pass through the center of all points, which
+will be evenly distributed above and below, and outliers are visible.
+
+The distribution of residuals (difference between predicted and actual
+values) allows for an evaluation of bias in the model. In the present
+study residuals are used in combination with transversal section and
+different intervals of the GIUR index in order to determine possible
+bias or limitations of the model. Residuals plots of a good model will
+have the points evenly distributed around zero across the range of the
+independent variables, and no statistical difference will exist between
+the categories of flake transversal section or GIUR intervals.
+Evaluation of residuals is only undertaken for the considered best
+model.
+
+The evaluation of models using the k-fold cross validation was performed
+using the complete dataset of 698 resharpening episodes from the 134
+flakes. This implies that, for a prediction, previous and posterior
+resharpening episodes of the same flake were included in the training
+data set. This raises the question whether the model is overfitting from
+seeing previous and posterior resharpening examples of the same flake.
+In order to evaluate this possible source of overfitting, a random
+selection of 10% (n = 13) of flakes and all their resharpening episodes
+were removed from the training set and the remaining sample used to
+train the previously selected best model. This process was repeated
+until 100000 predictions were obtained and then the four measures of
+performance were calculated. In this scenario, a significant decrease in
+model performance suggests overfitting in the full sample that includes
+multiple stages of the same flake.
+
+Additionally, two models were trained for comparison using the sample of
+134 flakes. The first model uses the same set of variables from
+Bustos-Pérez & Baena Preysler \[[35](#ref-bustos-perez_multiple_2022)\]
+in order to predict original flake mass (log transformed). The second
+model was used log transformations of platform size and maximum
+thickness along with exterior platform angle as predictive variables in
+order to predict the cubic root of flake mass. Both models were trained
+using a multiple linear regression, and predicted values were
+transformed to the linear scale in order to compare performance metrics
+with those of the best model from the current study.
+
+The complete workflow was developed in RStudio IDE v.2024.04.02
+\[[57](#ref-rstudio_team_rstudio_2019)\] using the R programming
+language v.4.4.1 \[[58](#ref-r_core_team_r_2019)\]. The package
+tidyverse v.2.0.0 \[[59](#ref-wickham_welcome_2019)\] was employed for
+data manipulation and representation. Multiple linear regression uses
+the R package MASS v.7.3.60.2 \[[60](#ref-venables_modern_2002)\], SVM
+with linear kernel uses package kernlab v.0.9.32
+\[[61](#ref-karatzoglou_kernlab_2004)\], the random forest model uses
+packages e1071 v.1.7.14 and ranger v.0.16.0
+\[[62](#ref-dimitriadou_misc_2008),[63](#ref-wright_ranger_2015)\], and
+GBM uses package gbm v.2.2.2 \[[64](#ref-ridgeway_generalized_2007)\].
+Training and validation of models was done using the package caret
+v.6.0.94 \[[65](#ref-kuhn_building_2008)\]. The “Original Scraper Mass
+Calculator” which implements the model through a user friendly interface
+was written using the shiny package v.1.8.1.1
+\[[66](#ref-chang_package_2015)–[68](#ref-wickham_mastering_2021)\]. All
+data, code is made publicly available through a public repository
+organized following the structure of a research compendium \[69\] and
+using a markdown document through package bookdown v.0.39
+\[[69](#ref-mcnamara_dynamic_2014)–[71](#ref-xie_knitr_2014)\].  
+All data and the complete workflow of analysis is available as a
+research compendium \[[72](#ref-marwick_packaging_2018)\] at Github
+(<https://github.com/GuillermoBustosPerez/Scraper-Original-Mass/tree/main>).
+The complete code and files of the Original Scraper Mass calculator
+v.1.0.0 is also available at Github
+(<https://github.com/GuillermoBustosPerez/Original-Scraper-Mass-Calculator>),
+and the final implementation of the application can be accessed at:
+<https://guillermo-bustos-perez.shinyapps.io/Original-Scraper-Mass-Calculator/>
+
+## **Results**
+
+### **Resharpening effects on the experimental assemblage**
+
+Figure 2 presents the effects of each resharpening episode on the
+experimental assemblage. On average, flakes from the first episode of
+retouch had 1.84 g removed (with the exception of an outlier flake which
+had 25 g removed). Maximum value of mass removed was of 95.5 g after
+five episodes of retouch, while flakes reaching ten episodes of retouch
+had an average of 28.4 g removed. As for the retouched pieces, mass of
+the assemblage decreased from 45.9 g after the first episode of retouch
+to 15.9 g after ten episodes of retouch. On average, the resharpening
+episodes removed 20% (with a standard deviation of 15.9%) of mass from
+the scrapers. One resharpening episode removed a minimum of 0.513%, and
+a resharpening episode removed a maximum of 67.3% of mass. 50% of the
+resharpening episodes removed between 5.9% and 31.3% of mass.
 
 ## **References**
 
@@ -812,6 +993,269 @@ Experimental evaluation of Kuhn’s geometric index of reduction and the
 flat-flake problem. Journal of Archaeological Science. 2005;32:
 1015–1022.
 doi:[10.1016/j.jas.2005.02.002](https://doi.org/10.1016/j.jas.2005.02.002)</span>
+
+</div>
+
+<div id="ref-james_introduction_2013" class="csl-entry">
+
+<span class="csl-left-margin">45.
+</span><span class="csl-right-inline">James G, Witten D, Hastie T,
+Tibshirani R. An Introduction to Statistical Learning with Applications
+in R. Second Edition. New York: springer; 2013. Available:
+<https://doi.org/10.1007/978-1-0716-1418-1></span>
+
+</div>
+
+<div id="ref-awad_support_2015" class="csl-entry">
+
+<span class="csl-left-margin">46.
+</span><span class="csl-right-inline">Awad M, Khanna R. Support Vector
+Regression. In: Awad M, Khanna R, editors. Efficient Learning Machines:
+Theories, Concepts, and Applications for Engineers and System Designers.
+Berkeley, CA: Apress; 2015. pp. 67–80.
+doi:[10.1007/978-1-4302-5990-9_4](https://doi.org/10.1007/978-1-4302-5990-9_4)</span>
+
+</div>
+
+<div id="ref-cortes_support-vector_1995" class="csl-entry">
+
+<span class="csl-left-margin">47.
+</span><span class="csl-right-inline">Cortes C, Vapnik V. Support-vector
+networks. Machine learning. 1995;20: 273–297. </span>
+
+</div>
+
+<div id="ref-smola_tutorial_2004" class="csl-entry">
+
+<span class="csl-left-margin">48.
+</span><span class="csl-right-inline">Smola AJ, Schölkopf B. A tutorial
+on support vector regression. Statistics and Computing. 2004;14:
+199–222.
+doi:[10.1023/B:STCO.0000035301.49549.88](https://doi.org/10.1023/B:STCO.0000035301.49549.88)</span>
+
+</div>
+
+<div id="ref-breiman_random_2001" class="csl-entry">
+
+<span class="csl-left-margin">49.
+</span><span class="csl-right-inline">Breiman L. Random Forests. Machine
+Learning. 2001;45: 5–32.
+doi:[10.1023/A:1010933404324](https://doi.org/10.1023/A:1010933404324)</span>
+
+</div>
+
+<div id="ref-lantz_machine_2019" class="csl-entry">
+
+<span class="csl-left-margin">50.
+</span><span class="csl-right-inline">Lantz B. Machine learning with R:
+Expert techniques for predictive modeling. Birmingham: Packt publishing
+ltd; 2019. </span>
+
+</div>
+
+<div id="ref-friedman_greedy_2001" class="csl-entry">
+
+<span class="csl-left-margin">51.
+</span><span class="csl-right-inline">Friedman JH. Greedy function
+approximation: A gradient boosting machine. Annals of statistics.
+2001;29: 1189–1232. Available:
+<https://www.jstor.org/stable/2699986></span>
+
+</div>
+
+<div id="ref-friedman_stochastic_2002" class="csl-entry">
+
+<span class="csl-left-margin">52.
+</span><span class="csl-right-inline">Friedman JH. Stochastic gradient
+boosting. Computational Statistics & Data Analysis. 2002;38: 367–378.
+doi:[10.1016/S0167-9473(01)00065-2](https://doi.org/10.1016/S0167-9473(01)00065-2)</span>
+
+</div>
+
+<div id="ref-anscombe_graphs_1973" class="csl-entry">
+
+<span class="csl-left-margin">53.
+</span><span class="csl-right-inline">Anscombe FJ. Graphs in Statistical
+Analysis. The American Statistician. 1973;27: 17.
+doi:[10.2307/2682899](https://doi.org/10.2307/2682899)</span>
+
+</div>
+
+<div id="ref-fox_r_2018" class="csl-entry">
+
+<span class="csl-left-margin">54.
+</span><span class="csl-right-inline">Fox J, Weisberg S. An R companion
+to applied regression. Third. Thousand Oaks: Sage publications; 2018.
+</span>
+
+</div>
+
+<div id="ref-marquardt_generalized_1970" class="csl-entry">
+
+<span class="csl-left-margin">55.
+</span><span class="csl-right-inline">Marquardt DW. Generalized
+Inverses, Ridge Regression, Biased Linear Estimation, and Nonlinear
+Estimation. Technometrics. 1970;12: 591–612. </span>
+
+</div>
+
+<div id="ref-obrien_caution_2007" class="csl-entry">
+
+<span class="csl-left-margin">56.
+</span><span class="csl-right-inline">O’brien RM. A Caution Regarding
+Rules of Thumb for Variance Inflation Factors. Quality & Quantity.
+2007;41: 673–690.
+doi:[10.1007/s11135-006-9018-6](https://doi.org/10.1007/s11135-006-9018-6)</span>
+
+</div>
+
+<div id="ref-rstudio_team_rstudio_2019" class="csl-entry">
+
+<span class="csl-left-margin">57.
+</span><span class="csl-right-inline">Team Rs. RStudio: Integrated
+Development for R. Boston, MA: RStudio, Inc.; 2019. Available:
+<http://www.rstudio.com/></span>
+
+</div>
+
+<div id="ref-r_core_team_r_2019" class="csl-entry">
+
+<span class="csl-left-margin">58.
+</span><span class="csl-right-inline">Team RC. R: A language and
+environment for statistical computing. Vienna, Austria: R Foundation for
+Statistical Computing; 2019. Available:
+<https://www.R-project.org/></span>
+
+</div>
+
+<div id="ref-wickham_welcome_2019" class="csl-entry">
+
+<span class="csl-left-margin">59.
+</span><span class="csl-right-inline">Wickham H, Averick M, Bryan J,
+Chang W, McGowan L, François R, et al. Welcome to the Tidyverse. Journal
+of Open Source Software. 2019;4: 1686.
+doi:[10.21105/joss.01686](https://doi.org/10.21105/joss.01686)</span>
+
+</div>
+
+<div id="ref-venables_modern_2002" class="csl-entry">
+
+<span class="csl-left-margin">60.
+</span><span class="csl-right-inline">Venables WN, Ripley BD. Modern
+applied statistics with S. Fourth Edition. New York: Springer; 2002.
+Available: <https://www.stats.ox.ac.uk/pub/MASS4/></span>
+
+</div>
+
+<div id="ref-karatzoglou_kernlab_2004" class="csl-entry">
+
+<span class="csl-left-margin">61.
+</span><span class="csl-right-inline">Karatzoglou A, Smola A, Hornik K,
+Zeileis A. Kernlab - An S4 Package for Kernel Methods in R. Journal of
+Statistical Software. 2004;11: 1–20.
+doi:[10.18637/jss.v011.i09](https://doi.org/10.18637/jss.v011.i09)</span>
+
+</div>
+
+<div id="ref-dimitriadou_misc_2008" class="csl-entry">
+
+<span class="csl-left-margin">62.
+</span><span class="csl-right-inline">Dimitriadou E, Hornik K, Leisch F,
+Meyer D, Weingessel A. Misc functions of the Department of Statistics
+(e1071), TU Wien. R package. 2008;1: 5–24. Available:
+<https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=3ceff42db79be884fc7b18b22fcc6ba0d8ef0faf></span>
+
+</div>
+
+<div id="ref-wright_ranger_2015" class="csl-entry">
+
+<span class="csl-left-margin">63.
+</span><span class="csl-right-inline">Wright MN, Ziegler A. Ranger: A
+fast implementation of random forests for high dimensional data in C++
+and R. arXiv preprint arXiv:150804409. 2015. </span>
+
+</div>
+
+<div id="ref-ridgeway_generalized_2007" class="csl-entry">
+
+<span class="csl-left-margin">64.
+</span><span class="csl-right-inline">Ridgeway G. Generalized Boosted
+Models: A guide to the gbm package. R package vignette. 2007; 2007.
+Available: <http://CRAN.R-project.org/package=gbm></span>
+
+</div>
+
+<div id="ref-kuhn_building_2008" class="csl-entry">
+
+<span class="csl-left-margin">65.
+</span><span class="csl-right-inline">Kuhn M. Building Predictive Models
+in R using the caret Package. Journal of Statistical Software. 2008;28:
+1–26.
+doi:[10.18637/jss.v028.i05](https://doi.org/10.18637/jss.v028.i05)</span>
+
+</div>
+
+<div id="ref-chang_package_2015" class="csl-entry">
+
+<span class="csl-left-margin">66.
+</span><span class="csl-right-inline">Chang W, Cheng J, Allaire J, Xie
+Y, McPherson J. Package “shiny.” 2015 \[cited 1 Oct 2024\]. Available:
+<https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=b7600ac8de6a97df1bd26dcbfc43ef9fc3c8be61></span>
+
+</div>
+
+<div id="ref-kasprzak_six_2020" class="csl-entry">
+
+<span class="csl-left-margin">67.
+</span><span class="csl-right-inline">Kasprzak P, Mitchell L, Kravchuk
+O, Timmins A. Six Years of Shiny in Research-Collaborative Development
+of Web Tools in R. R Journal. 2020;12: 20–42.
+doi:[10.32614/rj-2021-004](https://doi.org/10.32614/rj-2021-004)</span>
+
+</div>
+
+<div id="ref-wickham_mastering_2021" class="csl-entry">
+
+<span class="csl-left-margin">68.
+</span><span class="csl-right-inline">Wickham H. Mastering shiny. "
+O’Reilly Media, Inc."; 2021. </span>
+
+</div>
+
+<div id="ref-mcnamara_dynamic_2014" class="csl-entry">
+
+<span class="csl-left-margin">69.
+</span><span class="csl-right-inline">McNamara A. Dynamic Documents with
+R and knitr. Journal of Statistical Software. 2014;56: 1–4. Available:
+<https://www.jstatsoft.org/index.php/jss/article/view/v056b02/731></span>
+
+</div>
+
+<div id="ref-xie_bookdown_2016" class="csl-entry">
+
+<span class="csl-left-margin">70.
+</span><span class="csl-right-inline">Xie Y. Bookdown: Authoring books
+and technical documents with R markdown. Taylor & Francis Ltd; 2016.
+</span>
+
+</div>
+
+<div id="ref-xie_knitr_2014" class="csl-entry">
+
+<span class="csl-left-margin">71.
+</span><span class="csl-right-inline">Xie Y. Knitr: A Comprehensive Tool
+for Reproducible Research in R. Implementing Reproducible Research.
+Chapman; Hall/CRC; 2014. </span>
+
+</div>
+
+<div id="ref-marwick_packaging_2018" class="csl-entry">
+
+<span class="csl-left-margin">72.
+</span><span class="csl-right-inline">Marwick B, Boettiger C, Mullen L.
+Packaging Data Analytical Work Reproducibly Using R (and Friends). The
+American Statistician. 2018;72: 80–88.
+doi:[10.1080/00031305.2017.1375986](https://doi.org/10.1080/00031305.2017.1375986)</span>
 
 </div>
 
