@@ -532,6 +532,11 @@ selection of hyperparameters. Final models can be accessed at
 source("/Scripts/11-Training-models.R")
 ```
 
+The following line of code trains the random forest model by removing
+all resharpening events of 10% of flakes. This is dne in order to
+determine if the model is benefiting from seeing previous episodes of a
+same flake, thus resulting in overfit.
+
 ``` r
 load("Models/Best-Subset-Random-Forest.RData")
 load("Models/Best-Subset-MLR.RData")
@@ -1029,6 +1034,150 @@ data.frame(
     ## 2          SVML          0.735      0.399  9.811 20.064 1.449
     ## 3 Random Forest          0.805      0.839  4.662  6.485 0.365
     ## 4           GBM          0.790      0.805  5.189  7.160 0.449
+
+ 
+
+### **Bias, limitations of the best model (random forest) and comparison with other models.**
+
+The episodes of resharpening generated 130 cases where the flat flake
+problem is observed and 564 cases where this problem is not observed.
+Students t-test comparing the residual distribution of flat and non-flat
+flakes shows no statistical differences (t = -1.93; p = 0.17) for all
+episodes of resharpening. When selecting flakes that had four or more
+resharpening episodes, no statistical significance is observed for the
+residual distribution (t = -0.79; p = 0.43). This indicates that for the
+given sample and the given predictive variables, random forest
+predictions are not affected by the flat flake problem.
+
+Figure 6 presents the residual (when predicting original flake mass)
+distribution of continuous GIUR values and the same divided into five
+intervals. A density plot indicates that, on a general level, residuals
+tend to peak at the zero value. However, with increasing GIUR intervals
+the peak among the zero value diminishes. Scatter and box plots also
+indicate that, for higher GIUR values and intervals, a greater range of
+residual values is present. This indicates that, although residuals are
+evenly distributed around 0, the accuracy of predictions from the random
+forest diminishes among heavily retouched flakes (with GIUR values above
+0.8).
+
+Although knowing how many resharpening episodes an archaeological stone
+has undergone tool is unlikely, the availability of the data in a
+controlled experimentation allows for a better understanding of possible
+bias in the model. For the first two episodes of retouch, statistical
+differences were present between values of actual curation and estimated
+curation (t = 4.11; p \< 0.001 and t = 2.31; p = 0.02). Statistical
+differences between estimated and actual curation ratios are absent for
+resharpening episodes three to seven. Statistically significant
+differences between estimated and real curated values are present for
+scrapers which underwent eight or more resharpening episodes (t = -3.73;
+p \< 0.001).
+
+``` r
+Pred.RF <- RF_Model.BS$pred %>%
+  group_by(rowIndex) %>%
+  summarise(
+    pred = mean(pred),
+    obs = mean(obs)) %>%
+  mutate(
+    Residuals = obs - pred)
+
+
+Pred.RF <- Data2 %>%
+  select(Flake.ID, Sec.Trans, Termin, Episode,
+         W.Retrieved.g, Rem.Weight.g, Mean.t, Log.M.Thick, GIUR) %>%
+  cbind(Pred.RF) %>% mutate(
+    Cat.GIUR = cut(GIUR, 5)) %>% 
+  mutate(
+    Cat.GIUR = case_when(
+      Cat.GIUR == "(0.124,0.3]" ~ "0.124 - 0.3",
+      Cat.GIUR == "(0.3,0.475]" ~ "0.3 - 0.475",
+      Cat.GIUR == "(0.475,0.65]" ~ "0.475 - 0.65",
+      Cat.GIUR == "(0.65,0.825]" ~ "0.65 - 0.825",
+      Cat.GIUR == "(0.825,1]" ~ "0.825 - 1")
+  )
+
+ggpubr::ggarrange(
+  (
+    Pred.RF %>% ggplot(aes(Residuals, color = Cat.GIUR)) +
+      geom_density(size = 1) + 
+      theme_light() +
+      ggsci::scale_color_d3() +
+      labs(color = "GIUR intervals") +
+      ylab("Density") +
+      theme(
+        legend.position = "top",
+        axis.text = element_text(size = 8, color = "black")) 
+  ),
+  
+  (
+    ggpubr::ggarrange(
+      (
+        Pred.RF %>% ggplot(aes(GIUR, Residuals)) +
+          geom_point() +
+          scale_x_continuous(breaks = seq(0, 1, by = 0.1)) +  
+          scale_y_continuous(breaks = seq(-50, 50, 10), lim = c(-50, 50)) +
+          theme_light() +
+          theme(
+            axis.text = element_text(color = "black", size = 8)
+          )
+      ),
+      (
+        Pred.RF %>% ggplot(aes(Cat.GIUR, Residuals)) +
+          geom_boxplot() +
+          scale_y_continuous(breaks = seq(-50, 50, 10), lim = c(-50, 50)) + 
+          theme_light() +
+          xlab("GIUR intervals") +
+          theme(
+            axis.text = element_text(color = "black", size = 8)
+          )
+      ), 
+      ncol = 2)
+  ),
+  nrow = 2
+  )
+```
+
+    ## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+    ## ℹ Please use `linewidth` instead.
+    ## This warning is displayed once every 8 hours.
+    ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+    ## generated.
+
+![](Report_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
+``` r
+read.csv("Data/RF-results-leaving-flake-sequences.csv")
+```
+
+    ##     r2   MAE  RMSE  MAPE
+    ## 1 0.96 3.989 7.478 7.929
+
+Figure 7 presents real and estimated values of curation according to
+each resharpening episode. Considering all episodes of retouch, no
+statistically significant difference is present between values of
+predicted and actual curation (t = 1.12, df = 1382.7; p = 0.262).
+However, a statistically significant difference is present between
+predicted and actual values of curation for the first episode of retouch
+(t = 3.811, df = 224.83; p \< 0.001). This indicates that for scrapers
+which have undergone very light retouch, the random forest model will
+slightly overpredict their curation ratio. Statistically significant
+differences are also present between values of predicted and actual
+curation on flakes which have undergone eight or more resharpening
+episodes (t = -3.731, df = 48.493; p \< 0.001). This means that scrapers
+which have undergone multiple episodes of retouch, with more than 50% of
+their mass removed, will have underpredicted curated ratios (Figure 7).
+
+Table 4 presents the performance metrics values of the random forest
+model when leaving out 10% of flakes and all their resharpening
+episodes. Performance metrics present marginally lower values (Table 2).
+The Linear correlation (r2) decreases from 0.974 to 0.96, MAE increases
+from 3.297 to 3.989, RMSE increases from 5.917 to 7.478, and MAPE
+increases from 6.775 to 7.929.
+
+When compared to other models using the same sample of flakes (Table 5),
+the random forest presents much better performance metrics. Neither of
+the two models presented linear correlation values (r2) above the 0.8
+threshold when predicting original flake mass.
 
 ## **References**
 
