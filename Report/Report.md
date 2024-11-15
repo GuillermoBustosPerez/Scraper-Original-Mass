@@ -559,7 +559,82 @@ Data2 %>% select(Episode, GIUR, W.Retrieved.g, Mean.t, Rem.Weight.g) %>%
     strip.background = element_rect(fill = "white", colour = "black", linewidth = 1))
 ```
 
-![](Report_files/figure-gfm/effects-resharpening-1.png)<!-- -->
+![](Report_files/figure-gfm/effects-resharpening-1.png)<!-- -->  
+
+In general, the GIUR remains fairly unidirectional, with increasing
+values after each episode of resharpening. The average GIUR after the
+first resharpening episode was 0.33. The first maximum GIUR value (1)
+was reached after six episodes of resharpening. Only six flakes of the
+experimental assemblage reached a GIUR values of 1, providing a total of
+eight different episodes. Mean height of retouch (t) increases during
+the first seven resharpening episodes, from an average value of 4.19 mm
+after the first episode, to a value of 11.4 mm after the seventh
+episodes. Average height of retouch (t) decreases progressively
+afterwards to a value of 10.8 mm on episode 10 of retouch. This decrease
+in average t is result of retouch reaching the upper dorsal side of
+flakes and diminishing the overall thickness.  
+Both thickness at the midpoint and maximum thickness (Figure 3) remain
+fairly constant among all the resharpening events, although the range of
+values decreases with each resharpening episode (this is due to a
+decrease in the number of flakes due to discard). After eight
+resharpening events, a light decrease in both measures of thickness is
+observed due to retouch reaching the upper dorsal part of the flake and
+reducing its overall thickness.
+
+``` r
+Data2 %>% select(Episode, T.mm, Max.Thick.mm) %>% 
+  pivot_longer(
+    cols = c(T.mm:Max.Thick.mm),
+    values_to = "Values",
+    names_to = "Variables") %>% 
+  
+  ggplot(aes(as.factor(Episode), Values)) +
+  facet_wrap(~ factor(Variables, 
+                      levels = c("T.mm", "Max.Thick.mm"),
+                      labels = c("Thickness (mm)", "Max. Thick. (mm)")) , 
+             scales = "free") +
+  geom_violin() +
+  geom_boxplot(width = 0.4) + 
+  theme_light() +
+  xlab("Resharpening event") +
+  theme(
+    axis.text = element_text(color = "black", size = 7),
+    axis.title = element_text(color = "black", size = 7),
+    strip.text = element_text(color = "black", face = "bold", size = 8),
+    strip.background = element_rect(fill = "white", colour = "black", linewidth = 1))
+```
+
+![](Report_files/figure-gfm/thickness-resharpening-1.png)<!-- -->  
+
+### **Evaluation of regression models**
+
+Table 2 presents performance metrics of each of the regression models
+for predicting original flake mass. All models had RMSE values lower
+than the standard deviation of original flake mass, indicating a good
+fit of the models. The random forest model presented the best values for
+all evaluation metrics, being able to capture 0.974 of variance, and
+with a MAE of 3.297 g. It also presented the lowest RMSE value (5.917),
+indicative of being the least affected by outliers in the predictions.
+The lowest MAPE value of 6.775 indicates that the random forest model is
+also the least affected by the size of the original blanks. The GBM
+model has evaluation metrics similar to those of random forest, being
+able to capture a similar proportion of variance (0.971) and slightly
+higher values of MAE (3.549) and RMSE (6.185). In general, multiple
+linear regression was the model with the worst performance metrics,
+capturing slightly more variance than the SVM (respective values of
+0.963 and 0.961) and being less affected by the presence of outliers
+(respective values of 7.036 and 7.265).
+
+Figure 4 presents the regression plots of all trained models. All models
+present regression lines with evenly distributed predictions, indicative
+of an absence of bias. However, it is observed for the multiple linear
+regression and SVM that with increasing flake mass, the range of
+predictions becomes more dispersed. None of the predictive variables in
+the multiple linear regression model presented VIF values above the
+threshold of 10. Average height of retouch (t) presented the highest VIF
+value (7.27), followed by the GIUR index (4.59). Log transformed maximum
+thickness and remaining scraper mass presented respective VIF values of
+3.81 and 2.35.
 
 ## **References**
 
