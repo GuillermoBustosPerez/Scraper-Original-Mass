@@ -1167,6 +1167,34 @@ episodes (t = -3.731, df = 48.493; p \< 0.001). This means that scrapers
 which have undergone multiple episodes of retouch, with more than 50% of
 their mass removed, will have underpredicted curated ratios (Figure 7).
 
+``` r
+Pred.RF %>% 
+  mutate(
+    Real.Curated = Predicted.RF$Real.Curated,
+    Pred.Curated2 = Predicted.RF$Pred.Curated) %>% 
+  select(Episode, Cat.GIUR, Real.Curated, Pred.Curated2) %>% 
+  pivot_longer(Real.Curated:Pred.Curated2,
+               names_to = "Curation",
+               values_to = "Values") %>% 
+  mutate(Curation = factor(Curation, 
+                           levels = c("Real.Curated", "Pred.Curated2"),
+                           labels = c("Real", "Predicted"))) %>% 
+  
+  ggplot(aes(factor(Episode), Values, fill = Curation)) +
+  geom_boxplot() +
+  theme_light() +
+  ggsci::scale_fill_d3() +
+  xlab("Resharpening event") +
+  ylab("Curation Index") +
+  scale_y_continuous( breaks =  seq(-10, 70,10), limits = c(-11, 70)) +
+  theme(
+    legend.position = "bottom",
+    axis.text = element_text(color = "black")
+  )
+```
+
+![](Report_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->  
+
 Table 4 presents the performance metrics values of the random forest
 model when leaving out 10% of flakes and all their resharpening
 episodes. Performance metrics present marginally lower values (Table 2).
@@ -1178,6 +1206,301 @@ When compared to other models using the same sample of flakes (Table 5),
 the random forest presents much better performance metrics. Neither of
 the two models presented linear correlation values (r2) above the 0.8
 threshold when predicting original flake mass.
+
+``` r
+read.csv("Data/Results-Alternative-models.csv")
+```
+
+    ##                        Model    r2    MAE   RMSE   MAPE
+    ## 1 Bustos-Perez & Baena, 2022 0.784 12.326 19.169 28.718
+    ## 2 EPA, Platform, Max. Thick. 0.636 15.159 23.102 38.157
+
+### **The “Original Scraper Mass Calculator” v.1.0.0**
+
+In order to increase the applicability of machine learning models, the
+first version (v.1.0.0) of the original scraper mass calculator (OSMC)
+has been developed (Figure 8). This app integrates the above described
+random forest model into a user-friendly interface, allowing one to
+quickly estimate original scraper mass using the same set of variables.
+This app is published as a free open source Shiny app, allowing for its
+unrestricted use by the archaeological community.
+
+The current version of the OSMC allows the user to individually make
+estimations of original scraper mass or to process large amounts of
+data. Individual estimations can be done by manually entering data of
+each scraper at their corresponding spots and pressing the “Calculate
+original mass” button. Processing of files with multiple entries
+requires uploading a CSV file containing the data and with correct names
+for each of the column variables (an example downloadable CSV file has
+been made available at the app to ease this process). Column names of
+the CSV file must be: Rem.Weight, Mean.t, Max.thick (log10
+transformation of this variable is done automatically by the app), and
+GIUR. Both options return an estimation of the original scraper mass and
+what percentage has been lost through retouch.
+
+The app is available at:  
+<https://guillermo-bustos-perez.shinyapps.io/Original-Scraper-Mass-Calculator/>
+
+## **Discussion**
+
+The present study was aimed at predicting original scraper mass and from
+this the percentage of mass lost due to retouch (curation of an
+artifact). A set of 134 experimental flakes were sequentially retouched,
+and after each episode four variables were used as predictors. The set
+of variables were: scraper mass, maximum thickness of the flake (log10
+transformation), average height of retouch, and the GIUR
+\[[22](#ref-kuhn_geometric_1990)\]. Four models were prepared using
+these variables: a multiple linear regression, a supported vector
+machine regression, a random forest, and a GBM. Random forest had the
+best performance metrics, both when predicting original scraper mass (r2
+= 0.974) and percentage of mass lost by retouch (r2 = 0.839). VIF values
+from the multiple linear regression indicate that possible collinearity
+between predictors is of no consequence (all features presented VIF
+values bellow 10). When 10% of flakes (n = 13) and all their
+resharpening episodes were used as test sets, the performance metrics
+only diminished marginally. It can be considered that this marginally
+lower performance is a result of a loss of information during training
+and not due to overfitting. The resulting model has been integrated into
+the first version of the “Original scraper mass calculator” in a
+user-friendly app, which allows random forest estimations from user
+data. Data can be batch processed using CSV files (columns should have
+same name as the ones from the model) or manually introduced.
+
+Scrapers with direct retouch on a continuous edge are some of the most
+common lithic implements present from the first Oldowan stone tools
+\[[1](#ref-barsky_early_2011)–[3](#ref-semaw_26-million-year-old_2003)\]
+through to modern ethnographic examples
+\[[4](#ref-casamiquela_temas_1978)–[7](#ref-sillitoe_living_2003)\]. It
+is commonly considered that the amount of retouch that they receive is
+integral for understanding aspects of morphological variability and the
+organization of lithic technology by past societies
+\[[8](#ref-dibble_middle_1995),[18](#ref-shott_costs_2018),[73](#ref-barton_formation_2014),[74](#ref-roth_production_1998-1)\].
+Thus, being able to correctly estimate the amount and percentage of mass
+lost by retouch is fundamental for understanding these aspects of past
+human groups.
+
+Most studies aimed at predicting original flake mass use complete flakes
+and not in the framework of a sequential resharpening experimentation.
+When predicting original flake mass, most studies presented linear
+correlation values raging between 0.224 to 0.750
+\[[30](#ref-davis_quantifying_1998),[31](#ref-shott_flake_2000),[33](#ref-dogandzic_edge_2015),[38](#ref-clarkson_estimating_2011)\].
+Braun et al. \[[37](#ref-braun_landscape-scale_2008)\] obtained a linear
+correlation value of 0.865 for an archaeological sample of materials
+when predicting the log of flake mass. Dibble and Pelcin
+\[[25](#ref-dibble_effect_1995)\] obtained an $r^2$ of 0.815 under
+experimental controlled conditions. Bustos-Pérez and Baena Preysler
+\[[35](#ref-bustos-perez_multiple_2022)\] obtained an $r^2$ of 0.813 for
+free hand-held knapped flakes after predicting log transformed values of
+flake mass and transforming them back to the to the linear scale.
+However, most of these studies worked with complete flakes, making it
+not possible to estimate the curation ratio on a sequential resharpening
+experimentation.
+
+Studies evaluating the estimated reduction percentage (ERP) do provide
+accuracy metrics of predictions for original volume and percentage of
+volume lost by retouch for an experimental assemblage of flakes
+\[[21](#ref-eren_defining_2005),[23](#ref-morales_measuring_2015)\]. It
+is important to consider important differences between both experimental
+set-ups and the present research. ERP flakes were retouched only once,
+with most of them having lost less than 20% of volume due to retouch
+(less than 15% in the case of 3D ERP). When recorded manually
+\[[21](#ref-eren_defining_2005)\], the ERP correlated very strongly with
+flake original volume ($r^2$ = 0.823) and fairly strong with percentage
+of volume lost by retouch ($r^2$ = 0.799 when outliers were removed).
+Incorporating a 3D protocol for applying the ERP
+\[[23](#ref-morales_measuring_2015)\] resulted in very strong
+correlation values for both estimates ($r^2$ = 0.891 when estimating
+original volume, and $r^2$ = 0.812 when estimating percentage of mass
+lost by retouch).
+
+The higher correlation values obtained in the present study for original
+mass and percentage of mass removed by retouch can be attributed to
+three factors. First, the present study incorporated the scraper mass
+and maximum thickness. Scraper mass is probably helping machine learning
+algorithms model the minimum mass a scraper should have. The log
+transformed maximum thickness has been shown to serve as good proxy for
+original flake mass \[[34](#ref-bustos-perez_predicting_2021)\]. These
+two variables seem to be compensating for angle and length of retouch
+(used in the ERP and 3D-ERP), which would account for less than three
+percent of the variance when estimating original scraper mass for the
+given sample. Second, the present study also incorporated average height
+of retouch which strongly serves as a proxy of the amount of mass
+removed (and is also included in the ERP). Third, the present study used
+more robust regression methods, which are able to better model the
+provided variables and their interactions. This is especially noticeable
+in the results with tree-based methods (random forest and GBM)
+performing significantly better than the multiple linear regression.
+
+A series of ideal qualities have been proposed for reduction indexes
+\[[75](#ref-hiscock_generalization_2010)\]. The random forest model
+presented here complies with the qualities of inferential power,
+directionality, comprehensiveness, sensitivity, and scale-independence.
+The model presents an extremely large/strong inferential power (\>0.8)
+when estimating either original scraper mass or percentage of mass lost
+by retouch. This has allowed the model to make inferences at the
+individual level for specimens. Directionality, comprehensiveness and
+sensitivity are also present in the proposed model, with values of
+curation being detected from the beginning of retouch, and increasing
+with each episode of retouch. However, it is observed that there will be
+underestimations for big flakes which have lost large amount of mass by
+retouch (\>50%).
+
+A common drawback for estimating original scraper mass at the individual
+artifact level has been the obtention of negative values of curation
+(which happens when the predicted mass of the original flake blank is
+lower than the actual mass of the retouched scraper). This error was
+present in only three cases of the 698 mass predictions made by the
+random forest model. Although this error can still happen, it seems to
+be infrequent in the random forest model.
+
+The random forest model is also scale-independent, since it can be
+applied to blanks of different sizes and it estimates the amount of mass
+lost from retouch as a percentage of the original mass. However, it is
+also important to point out that the inferences at the individual level
+allow for the model to obtain predictions at the linear scale (amount of
+mass in grams lost by an individual scraper), which can also be
+considered when analyzing lithic assemblages.
+
+The random forest model complies with some of the qualities of blank
+diversity. Results from the present experimentation indicate that the
+predictions from the model are not affected by the different transversal
+section of flakes. The flat flake problem was specifically evaluated,
+with no statistically significant differences between residual
+distribution of flat and non-flat flakes. A statistically significant
+difference was also not present between both types of flakes on more
+advanced episodes of retouch. However, it still remains to be tested how
+the proposed index will perform on endscrapers made on blades. It is
+considered that on this tool-type the average height of retouch and GIUR
+will soon reach their maximum and remain stable, despite successive
+episodes of retouch.
+
+The proposed model has limited versatility, since it can be only applied
+to scrapers with hard hammer direct retouch among a continuous edge.
+Although this type of scraper is fairly predominant among lithic
+assemblages, other tool-types such as double scrapers, scrapers with
+inverse or bifacial retouch, or scrapers retouched with soft hammer
+cannot be analyzed with the present model.  
+Several limitations of the present research framework have already been
+indicated. As previously indicated, results show that very lightly
+retouched scrapers will have their curation ratio slightly
+overestimated, while heavily retouched scrapers will have a curation
+ratio underestimated. This bias at the lower an upper range of the
+predictions has been previously observed for random forests when
+predicting original flake mass
+\[[35](#ref-bustos-perez_multiple_2022)\]. In addition, and as
+previously stated, the application of the current model is limited only
+to scrapers with direct retouch on a continuous edge (excluding
+endscrapers made on blades, double scrapers or bifacially retouched
+scrapers). The initial experimental setting also presented a series of
+limitations. Values of original mass of scrapers presented a skewed
+distribution, with a long tail for flakes with a mass above 100 g. In
+additional, data for flakes above 100 g is sparse, with few examples
+available. These two factors might be impacting accuracy of predictions
+for scrapers with higher values of initial mass, since the random forest
+and GBM have fewer examples from which to learn predictions.
+
+Several additions can be done to expand and improve the current model in
+the future. As previously mentioned, the current model is limited to
+scrapers with direct retouch on one continuous edge. Further
+improvements using the current approach might benefit by adding “number
+of retouched edges” as a predictive variable or generating an
+independent new model specific for scrapers with multiple edges.
+
+The current research tested four different machine learning algorithms
+(multiple linear regression, SVM regression, random forest and GBM).
+Random forest was the best performing algorithm although lightly
+retouched artifacts tend to have an overpredicted curation ratio, while
+extremely heavily retouched scrapers are usually underpredicted.
+Previous studies have shown that artificial neural networks (ANN) can
+improve upon random forests when predicting original flake mass
+\[[35](#ref-bustos-perez_multiple_2022)\]. Despite being computationally
+more expensive, further research might benefit from training ANN for
+predicting original scraper mass, helping to overcome the bias observed
+in lightly and extremely retouched artifacts.
+
+The v.1.0.0 of the “Original Scraper Mass Calculator” does not provide
+indications of how reliable predictions are. Very lightly retouched
+artifacts tend to have an overestimated curation ratio, although
+predictions might be reliable. However, caution is recommended when it
+is inferred that a scraper has undergone multiple episodes of retouch
+since predictions from the current model will tend to underestimate the
+real amount of mass removed by retouch. Detecting cases of
+underestimation currently depends on the user knowledge of their lithic
+assemblage. An experienced lithic analyst will be able to detect cases
+of underestimation based on known features which determine flake mass
+(platform depth and size, flake thickness, etc.). Further versions of
+the “Original Scraper Mass Calculator” can include an indicator of the
+quality of predictions based on values of the GIUR index, or using an
+interaction of the GIUR and maximum thickness (allowing it to detect
+big/thick flakes which have undergone multiple episodes of
+resharpening).
+
+Accurate inferences of mass lost by individual scrapers can be combined
+with multiple lithic analysis. Original scraper mass and the curation
+ratio can be combined with geometric morphometrics to determine how
+scraper shape changes through reduction (allometry) at a single (or
+multiple) sites, or at a diachronic level
+\[\[[9](#ref-dibble_interpretation_1987)\];
+\[[16](#ref-andrefsky_construction_2008)\];
+\[[40](#ref-dogandzic_results_2020)\]; brumm_scraper_2011;
+\[[76](#ref-hiscock_early_2003)\]; \[[77](#ref-iovita_comparing_2010)\];
+\[[78](#ref-knell_allometry_2022)\]\]. Distance to raw material sources
+seems to have played an underlying factor of resharpening intensity
+among scrapers, with scrapers coming from longer distances having been
+resharpened more intensively
+\[[14](#ref-clarkson_holocene_2002),[15](#ref-glauberman_late_2020),[79](#ref-byrne_dynamics_1980)–[81](#ref-kuhn_planning_1992)\].
+However, concerns about accuracy of indexes employed for these
+estimations have been raised
+\[[23](#ref-morales_measuring_2015),[42](#ref-eren_kuhns_2009)\].
+Application of the proposed method can help better model the influence
+of raw material distance on resharpening intensity. Association between
+resharpening intensity, tool shape and use remain partially unexplored.
+Some studies have pointed to a lack of relationship between specific
+tool form and function \[[82](#ref-borel_stone_2017)\], while other
+studies point at potential higher functional versatility for tools
+coming from longer distances and higher curation ratios
+\[[83](#ref-agam_interpreting_2020)\]. Finally, the application of the
+proposed method can help to better model two additional aspect of lithic
+technological organization: changes in preferred blanks for resharpening
+and changes in tool gear transport. Changes in preferred initial blanks
+for resharpening have been observed between different Paleolithic
+periods but also within a same Paleolithic period. A clear example is
+observed among the different lithic technocomplexes of the western
+European Middle Paleolithic. Different lithic technocomplexes,
+characterized by different predominant knapping methods, show
+differences in the selection of initial blanks which underwent more
+intense resharpening
+\[[20](#ref-bustos-perez_exploring_2019),[84](#ref-roth_production_1998),[85](#ref-faivre_late_2017)\].
+Additionally, strategies of tool transport also experienced changes
+within technocomplexes, alternating between the transport and
+resharpening of tools and transport of cores for immediate flake
+production
+\[[17](#ref-kuhn_unpacking_1991),[86](#ref-porraz_middle_2009)\].
+
+## **Conclusions**
+
+Predicting original scraper mass and amount of mass lost by retouch has
+long been a major goal in lithic analysis. An experimental sample of 134
+flakes was sequentially retouched, and a new combination of variables
+(scraper mass, average height of retouch, maximum thickness, and value
+of the GIUR index) was recorded for each resharpening episode. This new
+set of variables in combination with more robust regression algorithms
+has resulted in the most accurate model to date. This higher accuracy
+allows for an estimation of retouch intensity at the individual scraper
+level. This model has been integrated into a user-friendly app in order
+to allow for its widespread application among the archaeological
+community.
+
+## **Acknowledgments**
+
+Guillermo Bustos-Pérez is postdoctoral researcher at the Department of
+Human Origins (Max Planck Institute for Evolutionary Anthropology).
+Several people have contributed to the improvement of the draft and
+testing the Original Scraper Mass Calculator. Shannon McPherron made
+suggestions to strength the analysis, test for overfitting and reviewed
+the early version of the manuscript. Etienne Nouraud helped test the
+first online deployment of the Original Scraper Mass Calculator and made
+suggestions for its improvement.
 
 ## **References**
 
@@ -1900,6 +2223,150 @@ Chapman; Hall/CRC; 2014. </span>
 Packaging Data Analytical Work Reproducibly Using R (and Friends). The
 American Statistician. 2018;72: 80–88.
 doi:[10.1080/00031305.2017.1375986](https://doi.org/10.1080/00031305.2017.1375986)</span>
+
+</div>
+
+<div id="ref-barton_formation_2014" class="csl-entry">
+
+<span class="csl-left-margin">73.
+</span><span class="csl-right-inline">Barton CM, Riel-Salvatore J. The
+formation of lithic assemblages. Journal of Archaeological Science.
+2014;46: 334–352.
+doi:[10.1016/j.jas.2014.03.031](https://doi.org/10.1016/j.jas.2014.03.031)</span>
+
+</div>
+
+<div id="ref-roth_production_1998-1" class="csl-entry">
+
+<span class="csl-left-margin">74.
+</span><span class="csl-right-inline">Roth BJ, Dibble HL. Production and
+Transport of Blanks and Tools at the French Middle Paleolithic Site of
+Combe-Capelle Bas. American Antiquity. 1998;63: 47–62. </span>
+
+</div>
+
+<div id="ref-hiscock_generalization_2010" class="csl-entry">
+
+<span class="csl-left-margin">75.
+</span><span class="csl-right-inline">Hiscock P, Tabrett A.
+Generalization, inference and the quantification of lithic reduction.
+World Archaeology. 2010;42: 545–561.
+doi:[10.1080/00438243.2010.517669](https://doi.org/10.1080/00438243.2010.517669)</span>
+
+</div>
+
+<div id="ref-hiscock_early_2003" class="csl-entry">
+
+<span class="csl-left-margin">76.
+</span><span class="csl-right-inline">Hiscock P, Attenbrow V. Early
+Australian implement variation: A reduction model. Journal of
+Archaeological Science. 2003;30: 239–249.
+doi:[10.1006/jasc.2002.0830](https://doi.org/10.1006/jasc.2002.0830)</span>
+
+</div>
+
+<div id="ref-iovita_comparing_2010" class="csl-entry">
+
+<span class="csl-left-margin">77.
+</span><span class="csl-right-inline">Ioviţă R. Comparing Stone Tool
+Resharpening Trajectories with the Aid of Elliptical Fourier Analysis.
+In: Lycett S, Chauhan P, editors. New Perspectives on Old Stones:
+Analytical Approaches to Paleolithic Technologies. New York, NY:
+Springer; 2010. pp. 235–253.
+doi:[10.1007/978-1-4419-6861-6_10](https://doi.org/10.1007/978-1-4419-6861-6_10)</span>
+
+</div>
+
+<div id="ref-knell_allometry_2022" class="csl-entry">
+
+<span class="csl-left-margin">78.
+</span><span class="csl-right-inline">Knell EJ. Allometry of unifacial
+flake tools from Mojave Desert terminal pleistocene/early holocene
+sites: Implications for landscape knowledge, tool design, and land use.
+Journal of Archaeological Science: Reports. 2022;41: 103314.
+doi:[10.1016/j.jasrep.2021.103314](https://doi.org/10.1016/j.jasrep.2021.103314)</span>
+
+</div>
+
+<div id="ref-byrne_dynamics_1980" class="csl-entry">
+
+<span class="csl-left-margin">79.
+</span><span class="csl-right-inline">Byrne D. Dynamics of Dispersion:
+The Place of Silcrete in Archaeological Assemblages from the Lower
+Murchison, Western Australia. Archaeology & Physical Anthropology in
+Oceania. 1980;15: 110–119. Available:
+<https://www.jstor.org/stable/40386377></span>
+
+</div>
+
+<div id="ref-clarkson_index_2002" class="csl-entry">
+
+<span class="csl-left-margin">80.
+</span><span class="csl-right-inline">Clarkson C. An Index of
+Invasiveness for the Measurement of Unifacial and Bifacial Retouch: A
+Theoretical, Experimental and Archaeological Verification. Journal of
+Archaeological Science. 2002;29: 65–75.
+doi:[10.1006/jasc.2001.0702](https://doi.org/10.1006/jasc.2001.0702)</span>
+
+</div>
+
+<div id="ref-kuhn_planning_1992" class="csl-entry">
+
+<span class="csl-left-margin">81.
+</span><span class="csl-right-inline">Kuhn SL. On Planning and Curated
+Technologies in the Middle Paleolithic. Journal of Anthropological
+Research. 1992;48: 185–214. </span>
+
+</div>
+
+<div id="ref-borel_stone_2017" class="csl-entry">
+
+<span class="csl-left-margin">82.
+</span><span class="csl-right-inline">Borel A, Cornette R, Baylac M.
+Stone Tool Forms and Functions: A Morphometric Analysis of Modern
+Humans’ Stone Tools From Song Terus Cave (Java, Indonesia): Stone tool
+forms and functions. Archaeometry. 2017;59: 455–471.
+doi:[10.1111/arcm.12264](https://doi.org/10.1111/arcm.12264)</span>
+
+</div>
+
+<div id="ref-agam_interpreting_2020" class="csl-entry">
+
+<span class="csl-left-margin">83.
+</span><span class="csl-right-inline">Agam A, Zupancich A. Interpreting
+the Quina and demi-Quina scrapers from Acheulo-Yabrudian Qesem Cave,
+Israel: Results of raw materials and functional analyses. Journal of
+Human Evolution. 2020;144: 102798.
+doi:[10.1016/j.jhevol.2020.102798](https://doi.org/10.1016/j.jhevol.2020.102798)</span>
+
+</div>
+
+<div id="ref-roth_production_1998" class="csl-entry">
+
+<span class="csl-left-margin">84.
+</span><span class="csl-right-inline">Roth BJ, Dibble HL. Production and
+Transport of Blanks and Tools at the French Middle Paleolithic Site of
+Combe-Capelle Bas. American Antiquity. 1998;63: 47–62. </span>
+
+</div>
+
+<div id="ref-faivre_late_2017" class="csl-entry">
+
+<span class="csl-left-margin">85.
+</span><span class="csl-right-inline">Faivre G-P, Gravina B, Bourguignon
+L, Discamps E, Turq A. Late Middle Palaeolithic lithic technocomplexes
+(MIS 5-3) in the northeastern Aquitaine Basin: Advances and challenges.
+Quaternary International. 2017;433: 116–131.
+doi:[10.1016/j.quaint.2016.02.060](https://doi.org/10.1016/j.quaint.2016.02.060)</span>
+
+</div>
+
+<div id="ref-porraz_middle_2009" class="csl-entry">
+
+<span class="csl-left-margin">86.
+</span><span class="csl-right-inline">Porraz G. Middle Paleolithic
+mobile toolkits in short-term human occupations: Two case studies.
+Eurasian Prehistory. 2009;6: 33–55. </span>
 
 </div>
 
