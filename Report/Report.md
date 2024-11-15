@@ -977,6 +977,59 @@ ggpubr::ggarrange(
 
 ![](Report_files/figure-gfm/regression-plots-curated-1.png)<!-- -->
 
+Linear correlation values indicate that random forest and GBM perform at
+least twice as well than the SVM with linear kernel, with respective r2
+values of 0.839 (random forest), and 0.805 (GBM). Both models also
+present RMSE values lower than the SD of the sample, indicative of a
+good fit of the model. The random forest model presents the best
+performance metrics, with the highest linear correlation value (r2 =
+0.839) and lowest values for MAE (4.662), RMSE (6.485) and MAPE (0.365).
+Random forest is closely followed by the GBM model, with a linear
+correlation value of 0.805. Visual evaluation of the regression plots
+(Figure 5) reinforces the notion of the good performance of random
+forest and GBM. In both cases prediction points are evenly distributed
+among the regression lines, and clustering of points in the lower values
+(due to over or underestimation of curation) are absent. GBM estimated
+an original scraper mass lower than the remaining scraper mass in 8
+cases, while random forest made the same error in only three cases.
+
+``` r
+data.frame(
+  Model = c("MLR", "SVML", "Random Forest", "GBM"),
+  `r2 W retrieved` = c(
+    summary(lm(Real.W.Retrieved ~ Abs.W.Ret, Predicted.MLR))$r.squared %>% round(3),
+    summary(lm(Real.W.Retrieved ~ Abs.W.Ret, Predicted.SVML))$r.squared %>% round(3),
+    summary(lm(Real.W.Retrieved ~ Abs.W.Ret, Predicted.RF))$r.squared %>% round(3),
+    summary(lm(Real.W.Retrieved ~ Abs.W.Ret, Predicted.GBM))$r.squared %>% round(3)
+  ),
+  `r2 Curated` = c(
+    summary(lm(Real.Curated ~ Pred.Curated2, Predicted.MLR))$r.squared %>% round(3),
+    summary(lm(Real.Curated ~ Pred.Curated2, Predicted.SVML))$r.squared %>% round(3),
+    summary(lm(Real.Curated ~ Pred.Curated2, Predicted.RF))$r.squared %>% round(3),
+    summary(lm(Real.Curated ~ Pred.Curated2, Predicted.GBM))$r.squared %>% round(3)),
+  MAE = c(
+    round(caret::MAE(Predicted.MLR$Real.Curated, Predicted.MLR$Pred.Curated2), 3),
+    round(caret::MAE(Predicted.SVML$Real.Curated, Predicted.SVML$Pred.Curated2),3),
+    round(caret::MAE(Predicted.RF$Real.Curated, Predicted.RF$Pred.Curated2), 3),
+    round(caret::MAE(Predicted.GBM$Real.Curated, Predicted.GBM$Pred.Curated2), 3)),
+  RMSE = c(
+    round(caret::RMSE(Predicted.MLR$Real.Curated, Predicted.MLR$Pred.Curated2), 3),
+    round(caret::RMSE(Predicted.SVML$Real.Curated, Predicted.SVML$Pred.Curated2),3),
+    round(caret::RMSE(Predicted.RF$Real.Curated, Predicted.RF$Pred.Curated2), 3),
+    round(caret::RMSE(Predicted.GBM$Real.Curated, Predicted.GBM$Pred.Curated2), 3)),
+  MAPE = c(
+    round(MLmetrics::MAPE(Predicted.MLR$Real.Curated, Predicted.MLR$Pred.Curated2), 3),
+    round(MLmetrics::MAPE(Predicted.SVML$Real.Curated, Predicted.SVML$Pred.Curated2), 3),
+    round(MLmetrics::MAPE(Predicted.RF$Real.Curated, Predicted.RF$Pred.Curated2), 3),
+    round(MLmetrics::MAPE(Predicted.GBM$Real.Curated, Predicted.GBM$Pred.Curated2), 3)))
+```
+
+    ##           Model r2.W.retrieved r2.Curated    MAE   RMSE  MAPE
+    ## 1           MLR          0.735      0.113 11.726 54.429 1.037
+    ## 2          SVML          0.735      0.399  9.811 20.064 1.449
+    ## 3 Random Forest          0.805      0.839  4.662  6.485 0.365
+    ## 4           GBM          0.790      0.805  5.189  7.160 0.449
+
 ## **References**
 
 </div>
