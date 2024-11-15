@@ -535,6 +535,32 @@ the scrapers. One resharpening episode removed a minimum of 0.513%, and
 a resharpening episode removed a maximum of 67.3% of mass. 50% of the
 resharpening episodes removed between 5.9% and 31.3% of mass.
 
+``` r
+# Resharpenning 
+Data2 %>% select(Episode, GIUR, W.Retrieved.g, Mean.t, Rem.Weight.g) %>% 
+  pivot_longer(
+    cols = c(GIUR:Rem.Weight.g),
+    values_to = "Values",
+    names_to = "Variables") %>% 
+  
+  ggplot(aes(as.factor(Episode), Values)) +
+  facet_wrap(~ factor(Variables, 
+                      levels = c("W.Retrieved.g", "Rem.Weight.g", "GIUR",  "Mean.t"),
+                      labels = c( "Mass Removed (g)", "Remaining mass (g)", "GIUR", "Mean t (mm)")) , 
+             scales = "free") +
+  geom_violin() +
+  geom_boxplot(width = 0.4) + 
+  theme_light() +
+  xlab("Resharpening event") +
+  theme(
+    axis.text = element_text(color = "black", size = 7),
+    axis.title = element_text(color = "black", size = 7),
+    strip.text = element_text(color = "black", face = "bold", size = 8),
+    strip.background = element_rect(fill = "white", colour = "black", linewidth = 1))
+```
+
+![](Report_files/figure-gfm/effects-resharpening-1.png)<!-- -->
+
 ## **References**
 
 </div>
