@@ -282,7 +282,77 @@ Data1 %>%
     axis.title = element_text(color = "black", size = 10, face = "bold"))
 ```
 
-![](Report_files/figure-gfm/histogram-initial-mass-1.png)<!-- -->
+![](Report_files/figure-gfm/histogram-initial-mass-1.png)<!-- -->  
+
+All flakes were retouched until they were too small to hold while
+retouching (n = 4), they broke during retouch (n = 74), or the angle of
+retouch was too abrupt to detach additional resharpening flakes (n =
+59). Retouch was done through freehand direct hard hammer on the dorsal
+face of flakes (direct retouch). In order to reshape the flakes one
+continuous retouched edge was established. After the first episode of
+resharpening, the retouched edge was expanded through the flakes edge in
+a continuous manner. This limits the potential application of this index
+to simple scrapers with direct retouch (which excludes double scrapers
+or scrapers with inverse or bifacial retouch).
+
+Most flakes underwent between four and seven episodes of retouch
+(67.2%), while only seven flakes provided nine or more episodes of
+retouch. The experimental assemblage provided a total of 694
+resharpening episodes with which to train the predictive models.
+
+### **Feature selection.**
+
+Based on previous research
+\[[22](#ref-kuhn_geometric_1990),[33](#ref-dogandzic_edge_2015),[34](#ref-bustos-perez_predicting_2021),[44](#ref-hiscock_experimental_2005)\]
+variables were recorded as predictive features. After each episode of
+retouch, the following variables were recorded:
+
+- Remaining scraper mass, recorded in grams with a Sytech SY-BS502 scale
+  and a precision of 0.01 g. This variable is selected since machine
+  learning models will consider remaining flake mass as a baseline on
+  minimum mass of the scraper.  
+- Thickness at the midpoint of the flake (measured in mm with a
+  precision of 0.1). It is considered that thickness remains relatively
+  unchanged as resharpening increases \[[19](#ref-shott_use_2017)\], and
+  its addition tends to increase the predictive power of models
+  \[[33](#ref-dogandzic_edge_2015)\].  
+- Maximum thickness of the flake measured in mm (with a precision of
+  0.1). Feature selection through all possible combination of variables
+  indicates that the logarithmic (base 10) transformation of this
+  variable can increase the predictive power of regression models for
+  freehand knapped flakes. Logarithmic transformation can result in
+  Gaussian distribution of feature values increasing the predictive
+  power of a model \[[34](#ref-bustos-perez_predicting_2021)\]. It is
+  also considered that as resharpening proceeds, the thickness at the
+  midpoint will be displaced (since length and width will diminish),
+  while maximum thickness will remain more stable.  
+- Three equidistant measures of height of retouch (*t*) and the
+  corresponding thickness (*T*) of the flake
+  \[[44](#ref-hiscock_experimental_2005)\] measured in mm (with a
+  precision of 0.1). The average of these three points is used as a
+  predictive feature. Here it is considered that the average height of
+  the retouch will serve as a proxy of mass removed from the scrapper.  
+- The GIUR index proposed by Kuhn \[[22](#ref-kuhn_geometric_1990)\].
+  This index divides the height of retouch (*t*) by its corresponding
+  thickness (*T*). As previously indicated, the present study records
+  three equidistant heights of retouch (*t*), each being divided by
+  their corresponding flake thickness (*T*). The GIUR value is
+  calculated as the average of these three divisions. GIUR values can
+  range from 0 (unretouched flake) to 1 (when the height of the reaches
+  the dorsal side of a flake).  
+  Variables selected for training the regression models were: scraper
+  mass, maximum thickness (log transformed), average height of
+  retouch (t) and value of the GIUR index.
+
+### **2.3 Regression models and evaluation.**
+
+Four methods were employed for regression analysis: multiple linear
+regression, support vector regression with a linear kernel, random
+forest and gradient boosting machine.
+
+Multiple linear regression (MLR) extends the simple linear regression in
+such a way that it can directly accommodate multiple predictors
+\[james_introduction_2013 : 71\].
 
 ## **References**
 
