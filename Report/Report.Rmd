@@ -152,7 +152,17 @@ The evaluation of models using the k-fold cross validation was performed using t
 Additionally, two models were trained for comparison using the sample of 134 flakes. The first model uses the same set of variables from Bustos-Pérez & Baena Preysler [@bustos-perez_multiple_2022] in order to predict original flake mass (log transformed). The second model was used log transformations of platform size and maximum thickness along with exterior platform angle as predictive variables in order to predict the cubic root of flake mass. Both models were trained using a multiple linear regression, and predicted values were transformed to the linear scale in order to compare performance metrics with those of the best model from the current study.   
 
 The complete workflow was developed in RStudio IDE v.2024.04.02 [@rstudio_team_rstudio_2019] using the R programming language v.4.4.1 [@r_core_team_r_2019]. The package tidyverse v.2.0.0 [@wickham_welcome_2019] was employed for data manipulation and representation. Multiple linear regression uses the R package MASS v.7.3.60.2 [@venables_modern_2002], SVM with linear kernel uses package kernlab v.0.9.32 [@karatzoglou_kernlab_2004], the random forest model uses packages e1071 v.1.7.14 and ranger v.0.16.0 [@dimitriadou_misc_2008; @wright_ranger_2015], and GBM uses package gbm v.2.2.2 [@ridgeway_generalized_2007]. Training and validation of models was done using the package caret v.6.0.94 [@kuhn_building_2008]. The “Original Scraper Mass Calculator” which implements the model through a user friendly interface was written using the shiny package v.1.8.1.1 [@chang_package_2015; @kasprzak_six_2020; @wickham_mastering_2021]. All data, code is made publicly available through a public repository organized following the structure of a research compendium [69] and using a markdown document through package bookdown v.0.39 [@mcnamara_dynamic_2014; @xie_bookdown_2016; @xie_knitr_2014].   
-All data and the complete workflow of analysis is available as a research compendium [@marwick_packaging_2018] at Github (https://github.com/GuillermoBustosPerez/Scraper-Original-Mass/tree/main). The complete code and files of the Original Scraper Mass calculator v.1.0.0 is also available at Github (https://github.com/GuillermoBustosPerez/Original-Scraper-Mass-Calculator), and the final implementation of the application can be accessed at: https://guillermo-bustos-perez.shinyapps.io/Original-Scraper-Mass-Calculator/  
+All data and the complete workflow of analysis is available as a research compendium [@marwick_packaging_2018] at Github (https://github.com/GuillermoBustosPerez/Scraper-Original-Mass/tree/main). The complete code and files of the Original Scraper Mass calculator v.1.0.0 is also available at Github (https://github.com/GuillermoBustosPerez/Original-Scraper-Mass-Calculator), and the final implementation of the application can be accessed at: https://guillermo-bustos-perez.shinyapps.io/Original-Scraper-Mass-Calculator/    
+
+### Training of the models   
+
+The following script trains the above described models. For the SVM linear regression, random forest and GBM hyperparameter cartesian grid search is performed, and final models are trained with the best selection of hyperparameters. Final models can be accessed at [Models](Models) folder.   
+
+```{r, eval=FALSE}
+source("/Scripts/11-Training-models.R")
+```
+
+
 
 ## **Results**      
 

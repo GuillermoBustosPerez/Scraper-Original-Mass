@@ -518,6 +518,18 @@ v.1.0.0 is also available at Github
 and the final implementation of the application can be accessed at:
 <https://guillermo-bustos-perez.shinyapps.io/Original-Scraper-Mass-Calculator/>
 
+### Training of the models
+
+The following script trains the above described models. For the SVM
+linear regression, random forest and GBM hyperparameter cartesian grid
+search is performed, and final models are trained with the best
+selection of hyperparameters. Final models can be accessed at
+[Models](Models) folder.
+
+``` r
+source("/Scripts/11-Training-models.R")
+```
+
 ## **Results**
 
 ### **Resharpening effects on the experimental assemblage**
