@@ -131,6 +131,7 @@ The gradient boosting machine (GBM) is an ensemble method that builds up a final
 Initial models are trained to estimate original scraper mass based on the set of selected attributes. However, as previously stated, the objective is to evaluate the ability of a model to predict the curation ratio of a stone tool (percentage of mass remaining relative to its original mass). Calculating the curation ratio of a stone tool can be formulated as:    
 
 $$ 100 - ((M/EOM) * 100) $$   
+
 Where:    
 M = mass (directly measured on the scraper).   
 EOM = estimated original mass (provided by the model).   

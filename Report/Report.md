@@ -388,7 +388,8 @@ ratio of a stone tool (percentage of mass remaining relative to its
 original mass). Calculating the curation ratio of a stone tool can be
 formulated as:
 
-$$ 100 - ((M/EOM) * 100) $$  
+$$ 100 - ((M/EOM) * 100) $$
+
 Where:  
 M = mass (directly measured on the scraper).  
 EOM = estimated original mass (provided by the model).
