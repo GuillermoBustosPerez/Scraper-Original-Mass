@@ -532,6 +532,13 @@ selection of hyperparameters. Final models can be accessed at
 source("/Scripts/11-Training-models.R")
 ```
 
+``` r
+load("Models/Best-Subset-Random-Forest.RData")
+load("Models/Best-Subset-MLR.RData")
+load("Models/Best-Subset-SVM-Linear.RData")
+load("Models/Best-Subset-GBM.RData")
+```
+
 ## **Results**
 
 ### **Resharpening effects on the experimental assemblage**
@@ -649,6 +656,38 @@ threshold of 10. Average height of retouch (t) presented the highest VIF
 value (7.27), followed by the GIUR index (4.59). Log transformed maximum
 thickness and remaining scraper mass presented respective VIF values of
 3.81 and 2.35.
+
+``` r
+data.frame(
+  Model = c("Mult. Linear Reg.", "SVM Linear", "Random Forest", "GBM"),
+  r2 = c(
+    round(MLR_Model.BS$results[[3]], 4),
+    round(SVML_Model.BS$results[[3]], 4),
+    round(RF_Model.BS$results[[5]], 4),
+    round(GBM_Model.BS$results[[6]], 4)),
+  MAE = c(
+    round(MLR_Model.BS$results[[4]], 3),
+    round(SVML_Model.BS$results[[4]], 3),
+    round(RF_Model.BS$results[[6]], 3),
+    round(GBM_Model.BS$results[[7]], 3)),
+  RMSE = c(
+    round(MLR_Model.BS$results[[2]], 3),
+    round(SVML_Model.BS$results[[2]], 3),
+    round(RF_Model.BS$results[[4]], 3),
+    round(GBM_Model.BS$results[[5]], 3)),
+  MAPE = c(
+    round(MLmetrics::MAPE(MLR_Model.BS$pred$pred, MLR_Model.BS$pred$obs)*100, 3),
+    round(MLmetrics::MAPE(SVML_Model.BS$pred$pred, SVML_Model.BS$pred$obs)*100, 3),
+    round(MLmetrics::MAPE(RF_Model.BS$pred$pred, RF_Model.BS$pred$obs)*100, 3),
+    round(MLmetrics::MAPE(GBM_Model.BS$pred$pred, GBM_Model.BS$pred$obs)*100, 3))
+)
+```
+
+    ##               Model     r2   MAE  RMSE   MAPE
+    ## 1 Mult. Linear Reg. 0.9629 4.672 7.036 12.269
+    ## 2        SVM Linear 0.9613 4.394 7.265 11.304
+    ## 3     Random Forest 0.9740 3.297 5.917  6.775
+    ## 4               GBM 0.9710 3.549 6.185  7.705
 
 ## **References**
 

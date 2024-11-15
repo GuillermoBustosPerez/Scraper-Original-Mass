@@ -163,6 +163,12 @@ The following script trains the above described models. For the SVM linear regre
 source("/Scripts/11-Training-models.R")
 ```
 
+```{r}
+load("Models/Best-Subset-Random-Forest.RData")
+load("Models/Best-Subset-MLR.RData")
+load("Models/Best-Subset-SVM-Linear.RData")
+load("Models/Best-Subset-GBM.RData")
+```
 
 
 ## **Results**      
@@ -228,6 +234,33 @@ Data2 %>% select(Episode, T.mm, Max.Thick.mm) %>%
 Table 2 presents performance metrics of each of the regression models for predicting original flake mass. All models had RMSE values lower than the standard deviation of original flake mass, indicating a good fit of the models. The random forest model presented the best values for all evaluation metrics, being able to capture 0.974 of variance, and with a MAE of 3.297 g. It also presented the lowest RMSE value (5.917), indicative of being the least affected by outliers in the predictions. The lowest MAPE value of 6.775 indicates that the random forest model is also the least affected by the size of the original blanks. The GBM model has evaluation metrics similar to those of random forest, being able to capture a similar proportion of variance (0.971) and slightly higher values of MAE (3.549) and RMSE (6.185). In general, multiple linear regression was the model with the worst performance metrics, capturing slightly more variance than the SVM (respective values of 0.963 and 0.961) and being less affected by the presence of outliers (respective values of 7.036 and 7.265).    
 
 Figure 4 presents the regression plots of all trained models. All models present regression lines with evenly distributed predictions, indicative of an absence of bias. However, it is observed for the multiple linear regression and SVM that with increasing flake mass, the range of predictions becomes more dispersed. None of the predictive variables in the multiple linear regression model presented VIF values above the threshold of 10. Average height of retouch (t) presented the highest VIF value (7.27), followed by the GIUR index (4.59). Log transformed maximum thickness and remaining scraper mass presented respective VIF values of 3.81 and 2.35.   
+
+```{r models-metrics}
+data.frame(
+  Model = c("Mult. Linear Reg.", "SVM Linear", "Random Forest", "GBM"),
+  r2 = c(
+    round(MLR_Model.BS$results[[3]], 4),
+    round(SVML_Model.BS$results[[3]], 4),
+    round(RF_Model.BS$results[[5]], 4),
+    round(GBM_Model.BS$results[[6]], 4)),
+  MAE = c(
+    round(MLR_Model.BS$results[[4]], 3),
+    round(SVML_Model.BS$results[[4]], 3),
+    round(RF_Model.BS$results[[6]], 3),
+    round(GBM_Model.BS$results[[7]], 3)),
+  RMSE = c(
+    round(MLR_Model.BS$results[[2]], 3),
+    round(SVML_Model.BS$results[[2]], 3),
+    round(RF_Model.BS$results[[4]], 3),
+    round(GBM_Model.BS$results[[5]], 3)),
+  MAPE = c(
+    round(MLmetrics::MAPE(MLR_Model.BS$pred$pred, MLR_Model.BS$pred$obs)*100, 3),
+    round(MLmetrics::MAPE(SVML_Model.BS$pred$pred, SVML_Model.BS$pred$obs)*100, 3),
+    round(MLmetrics::MAPE(RF_Model.BS$pred$pred, RF_Model.BS$pred$obs)*100, 3),
+    round(MLmetrics::MAPE(GBM_Model.BS$pred$pred, GBM_Model.BS$pred$obs)*100, 3))
+)
+```
+
 
 
 ## **References**   
