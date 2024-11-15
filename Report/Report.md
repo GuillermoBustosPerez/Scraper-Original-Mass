@@ -689,6 +689,294 @@ data.frame(
     ## 3     Random Forest 0.9740 3.297 5.917  6.775
     ## 4               GBM 0.9710 3.549 6.185  7.705
 
+``` r
+#### Put all predictions of each model ####
+
+Predicted.MLR <- as.data.frame(MLR_Model.BS$pred) %>% 
+  group_by(rowIndex) %>% 
+  summarise(
+    mean.pred = round(mean(pred),2),
+    mean.obs = round(mean(obs),2)) %>% 
+  mutate(
+    Rema.Weight = Data2$Rem.Weight,
+    Real.W.Retrieved = Data2$W.Retrieved) %>% 
+  mutate(
+    Pred.W.Retrieved = (mean.pred - Rema.Weight),
+    Pred.Curated = 100 - (Rema.Weight/mean.pred)*100,
+    Real.Curated = 100 - (Rema.Weight/mean.obs )*100,
+    Residuals = mean.obs - mean.pred,
+    Abs.W.Ret = abs(Pred.W.Retrieved),
+    Pred.Curated2 = 100 - (Rema.Weight/mean.pred)*100)
+
+
+Predicted.SVML <- as.data.frame(SVML_Model.BS$pred) %>% 
+  group_by(rowIndex) %>% 
+  summarise(
+    mean.pred = round(mean(pred),2),
+    mean.obs = round(mean(obs),2)) %>% 
+  mutate(
+    Rema.Weight = Data2$Rem.Weight,
+    Real.W.Retrieved = Data2$W.Retrieved) %>% 
+  mutate(
+    Pred.W.Retrieved = (mean.pred - Rema.Weight),
+    Pred.Curated = 100 - (Rema.Weight/mean.pred)*100,
+    Real.Curated = 100 - (Rema.Weight/mean.obs )*100,
+    Residuals = mean.obs - mean.pred,
+    Abs.W.Ret = abs(Pred.W.Retrieved),
+    Pred.Curated2 = 100 - (Rema.Weight/mean.pred)*100)
+
+
+Predicted.RF <- as.data.frame(RF_Model.BS$pred) %>% 
+  group_by(rowIndex) %>% 
+  summarise(
+    mean.pred = round(mean(pred),2),
+    mean.obs = round(mean(obs),2)) %>% 
+  mutate(
+    Rema.Weight = Data2$Rem.Weight,
+    Real.W.Retrieved = Data2$W.Retrieved) %>% 
+  mutate(
+    Pred.W.Retrieved = (mean.pred - Rema.Weight),
+    Pred.Curated = 100 - (Rema.Weight/mean.pred)*100,
+    Real.Curated = 100 - (Rema.Weight/mean.obs )*100,
+    Residuals = mean.obs - mean.pred,
+    Abs.W.Ret = abs(Pred.W.Retrieved),
+    Pred.Curated2 = 100 - (Rema.Weight/mean.pred)*100)
+
+
+Predicted.GBM <- as.data.frame(GBM_Model.BS$pred) %>% 
+  group_by(rowIndex) %>% 
+  summarise(
+    mean.pred = round(mean(pred),2),
+    mean.obs = round(mean(obs),2)) %>% 
+  mutate(
+    Rema.Weight = Data2$Rem.Weight,
+    Real.W.Retrieved = Data2$W.Retrieved) %>% 
+  mutate(
+    Pred.W.Retrieved = (mean.pred - Rema.Weight),
+    Pred.Curated = 100 - (Rema.Weight/mean.pred)*100,
+    Real.Curated = 100 - (Rema.Weight/mean.obs )*100,
+    Residuals = mean.obs - mean.pred,
+    Abs.W.Ret = abs(Pred.W.Retrieved),
+    Pred.Curated2 = 100 - (Rema.Weight/mean.pred)*100)
+
+
+#### Plots of each regression model #####
+
+ggpubr::ggarrange(
+  
+  (
+    Predicted.MLR %>% 
+      ggplot(aes(mean.obs, mean.pred)) +
+      geom_point() +
+      scale_x_continuous(breaks = seq(0, 220, 20), lim = c(0, 220)) +
+      scale_y_continuous(breaks = seq(0, 220, 20), lim = c(0, 220)) +
+      ggtitle(label = "Multiple Linear regression model") + 
+      geom_smooth(method = "lm") +
+      coord_fixed() +
+      theme_light() +
+      ylab("Predicted mass") +
+      xlab("Observed mass") +
+      theme(
+        axis.title = element_text(size = 7),
+        axis.text = element_text(size = 6, color = "black"),
+        plot.title = element_text(size = 8))
+  ),
+  (
+    Predicted.SVML %>% 
+      ggplot(aes(mean.obs, mean.pred)) +
+      geom_point() +
+      scale_x_continuous(breaks = seq(0, 220, 20), lim = c(0, 220)) +
+      scale_y_continuous(breaks = seq(0, 220, 20), lim = c(0, 220)) +
+      ggtitle(label = "SVML model") + 
+      geom_smooth(method = "lm") +
+      coord_fixed() +
+      theme_light() +
+      ylab("Predicted mass") +
+      xlab("Observed mass") +
+      theme(
+        axis.title = element_text(size = 7),
+        axis.text = element_text(size = 6, color = "black"),
+        plot.title = element_text(size = 8))
+  ),
+  
+  (
+    Predicted.RF %>% 
+      ggplot(aes(mean.obs, mean.pred)) +
+      geom_point() +
+      scale_x_continuous(breaks = seq(0, 220, 20), lim = c(0, 220)) +
+      scale_y_continuous(breaks = seq(0, 220, 20), lim = c(0, 220)) +
+      ggtitle(label = "Random Forest model") + 
+      geom_smooth(method = "lm") +
+      coord_fixed() +
+      theme_light() +
+      ylab("Predicted mass") +
+      xlab("Observed mass") +
+      theme(
+        axis.title = element_text(size = 7),
+        axis.text = element_text(size = 6, color = "black"),
+        plot.title = element_text(size = 8))
+  ),
+  (
+    Predicted.GBM %>% 
+      ggplot(aes(mean.obs, mean.pred)) +
+      geom_point() +
+      scale_x_continuous(breaks = seq(0, 220, 20), lim = c(0, 220)) +
+      scale_y_continuous(breaks = seq(0, 220, 20), lim = c(0, 220)) +
+      ggtitle(label = "GBM model") + 
+      geom_smooth(method = "lm") +
+      coord_fixed() +
+      theme_light() +
+      ylab("Predicted mass") +
+      xlab("Observed mass") +
+      theme(
+        axis.title = element_text(size = 7),
+        axis.text = element_text(size = 6, color = "black"),
+        plot.title = element_text(size = 8))
+  ),
+  ncol = 2,
+  nrow = 2
+)
+```
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+    ## Warning: Removed 1 row containing non-finite outside the scale range
+    ## (`stat_smooth()`).
+
+    ## Warning: Removed 1 row containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](Report_files/figure-gfm/regression-plots-mass-1.png)<!-- -->  
+
+Percentage of flake mass consumed by retouch (curation) was calculated
+using estimations of original flake mass for each model and each episode
+of resharpening. Table 3 presents performance metrics of the four models
+when predicting the curation ratio, and Figure 5 presents their
+corresponding regression plots. Important differences can be observed
+between models when predicting percentage of mass lost by retouch based
+on predictions of original mass. Of the four models, only random forest
+and GBM presented adequate performance metrics. Multiple linear
+regression presented the lowest performance values, with a linear
+correlation value of 0.113, while SVM with linear kernel presented a
+significant higher (but still unsatisfactory) r2 value of 0.399. Both
+models also presented RMSE values higher than the standard deviation of
+percentage of mass lost through retouch (SD = 15.92). Visual evaluation
+of the regression plots indicates that the low performance metrics from
+both models (multiple linear regression and SVM with linear kernel) seem
+to be caused by underestimations original flake mass when a small
+percentage of flake mass has been removed by retouch. As a result,
+multiple linear regression estimated an original scraper mass value
+lower than remaining scraper mass in 127 cases. SVM with linear kernel
+estimated an original scraper mass lower than remaining scraper mass in
+118 cases.
+
+``` r
+ggpubr::ggarrange(
+  (
+    Predicted.MLR %>% 
+      ggplot(aes(Real.Curated, Pred.Curated)) +
+      geom_point(alpha = 0.6) +
+      geom_smooth(method = "lm") +
+      scale_x_continuous(breaks = seq(-30, 70, 10), lim = c(-30, 70)) +
+      scale_y_continuous(breaks = seq(-30, 70, 10), lim = c(-30, 70)) +
+      ggtitle(label = "Multiple Linear Regression model") +
+      coord_fixed() +
+      theme_light() +
+      geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.75) +
+      geom_hline(yintercept = 0, linetype = "dashed", alpha = 0.75) +
+      ylab("Predicted % of mass lost by retouch (curation)") +
+      xlab("Observed % of mass lost by retouch (curation)") +
+      theme(
+        axis.title = element_text(size = 6.5),
+        axis.text = element_text(size = 6, color = "black"),
+        plot.title = element_text(size = 8))
+  ),
+  (
+    Predicted.SVML %>% 
+      ggplot(aes(Real.Curated, Pred.Curated)) +
+      geom_point(alpha = 0.6) +
+      geom_smooth(method = "lm") +
+      scale_x_continuous(breaks = seq(-30, 70, 10), lim = c(-30, 70)) +
+      scale_y_continuous(breaks = seq(-30, 70, 10), lim = c(-30, 70)) +
+      ggtitle(label = "SVML model") +
+      coord_fixed() +
+      theme_light() +
+      geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.75) +
+      geom_hline(yintercept = 0, linetype = "dashed", alpha = 0.75) +
+      ylab("Predicted % of mass lost by retouch (curation)") +
+      xlab("Observed % of mass lost by retouch (curation)") +
+      theme(
+        axis.title = element_text(size = 6.5),
+        axis.text = element_text(size = 6, color = "black"),
+        plot.title = element_text(size = 8))
+  ),
+  (
+    Predicted.RF %>% 
+      ggplot(aes(Real.Curated, Pred.Curated)) +
+      geom_point(alpha = 0.6) +
+      geom_smooth(method = "lm") +
+      scale_x_continuous(breaks = seq(-15, 70, 10), lim = c(-15, 70)) +
+      scale_y_continuous(breaks = seq(-15, 70, 10), lim = c(-15, 70)) +
+      ggtitle(label = "Random Forest Model") +
+      coord_fixed() +
+      theme_light() +
+      geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.75) +
+      geom_hline(yintercept = 0, linetype = "dashed", alpha = 0.75) +
+      ylab("Predicted % of mass lost by retouch (curation)") +
+      xlab("Observed % of mass lost by retouch (curation)") +
+      theme(
+        axis.title = element_text(size = 6.5),
+        axis.text = element_text(size = 6, color = "black"),
+        plot.title = element_text(size = 8))
+  ),
+  (
+    Predicted.GBM %>% 
+      ggplot(aes(Real.Curated, Pred.Curated)) +
+      geom_point(alpha = 0.6) +
+      geom_smooth(method = "lm") +
+      scale_x_continuous(breaks = seq(-15, 70, 10), lim = c(-15, 70)) +
+      scale_y_continuous(breaks = seq(-15, 70, 10), lim = c(-15, 70)) +
+      ggtitle(label = "GBM model") + 
+      coord_fixed() +
+      theme_light() +
+      geom_vline(xintercept = 0, linetype = "dashed", alpha = 0.75) +
+      geom_hline(yintercept = 0, linetype = "dashed", alpha = 0.75) +
+      ylab("Predicted % of mass lost by retouch (curation)") +
+      xlab("Observed % of mass lost by retouch (curation)") +
+      theme(
+        axis.title = element_text(size = 6.5),
+        axis.text = element_text(size = 6, color = "black"),
+        plot.title = element_text(size = 8))
+  ),
+  ncol = 2,
+  nrow = 2)
+```
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+    ## Warning: Removed 22 rows containing non-finite outside the scale range
+    ## (`stat_smooth()`).
+
+    ## Warning: Removed 22 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+    ## Warning: Removed 21 rows containing non-finite outside the scale range
+    ## (`stat_smooth()`).
+
+    ## Warning: Removed 21 rows containing missing values or values outside the scale range
+    ## (`geom_point()`).
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](Report_files/figure-gfm/regression-plots-curated-1.png)<!-- -->
+
 ## **References**
 
 </div>
