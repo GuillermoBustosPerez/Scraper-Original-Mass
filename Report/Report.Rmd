@@ -53,6 +53,54 @@ A new framework is needed to overcome the limitations of previous models (absenc
 
 ### **Experimental sample.**
   
+The analyzed sample consisted of 134 experimentally knapped flakes using hard hammer. The raw material of hammerstones varied widely (quartz, quartzite, sandstone, and limestone), which allowed for a diverse range of morphologies and potential active percussion areas. The experimental sample is dominated by flakes with feather terminations (n = 121; 90.3%), followed by flakes with hinge terminations (n = 10; 7.46%).    
+
+```{r load-data-libraries}
+Data1 <- read.csv("Data/Data1.csv", sep = " ")
+load("Data/Data2.RData")
+library(tidyverse); library(caret)
+```
+
+
+Initial flake mass was recorded using a Sytech SY-BS502 with a precision of 0.01 grams. Average weight of the samples was 47.38 g, with 50% of flakes weighing between 18.07 and 63.16 g, and a standard deviation of 36.48. Figure 1 presents the flake mass distribution for the experimental sample, indicating a long tail of 14 flakes weighing more than 100 g.   
+
+The transversal section of flakes is considered to have an important effect on estimations derived from the geometric index of unifacial reduction (GIUR) [@kuhn_geometric_1990] and height of retouch. In particular, when a flake’s dorsal surface is parallel to the ventral surface, the GIUR and height of retouch will only marginally or will not at all increase after each resharpening episode, resulting in underestimations of flake mass removal [@dibble_middle_1995; @eren_kuhns_2009]. However, the actual effect of the “flat flake problem” on the estimation of flake mass might be marginal [@hiscock_reality_2009; @hiscock_experimental_2005]. The present study recorded flake schematic transversal section prior to retouch of each flake, with possible categories being: circular (n = 20), triangular (n = 63), triangular asymmetric (n = 29), trapezoidal (n = 13) and trapezoidal asymmetric (n = 9). The first three categories are considered to represent cases where the “flat flake problem” is not present, while the latter two are consider to represent cases were this problem is present.
+
+```{r}
+Data0 <- read.csv("Data/Data0.csv", sep = ",")
+
+Summary_Assem <- data.frame(
+  rbind(data.frame(data.matrix(summary(Data0$L.mm))) %>% t(),
+        data.frame(data.matrix(summary(Data0$W.mm))) %>% t(),
+        data.frame(data.matrix(summary(Data0$T.mm))) %>% t(),
+        data.frame(data.matrix(summary(Data0$Max.Thick.mm))) %>% t(),
+        data.frame(data.matrix(summary(Data0$Mean.Edge.Angle.Selected.ret))) %>% t()))
+Measure <- c("Length", "Width", "Middle Thickness", "Maximum thick",
+             "Mean angle edge prior to retouch")
+Summary_Assem <- cbind(Measure, Summary_Assem)
+rownames(Summary_Assem) <- 1:nrow(Summary_Assem)
+print(Summary_Assem)
+rm(Data0)
+```
+
+
+
+```{r histogram-initial-mass}
+Data1 %>% 
+  filter(Episode == 0) %>% 
+  ggplot(aes(Or.Weight.g)) +
+  geom_histogram(binwidth = 10,
+                 color = "black", fill = "gray", 
+                 boundary = 0) +
+  theme_light() +
+  ylab("Frequency") +
+  xlab("Mass (g)") +
+  scale_x_continuous(breaks = seq(0, 210, 10)) +
+  scale_y_continuous(breaks = seq(0, 30, 2)) +
+  theme(
+    axis.text = element_text(color = "black", size = 6),
+    axis.title = element_text(color = "black", size = 10, face = "bold"))
+```
 
 
 ## **References**   

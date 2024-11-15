@@ -193,6 +193,117 @@ download the results.
 
 ### **Experimental sample.**
 
+The analyzed sample consisted of 134 experimentally knapped flakes using
+hard hammer. The raw material of hammerstones varied widely (quartz,
+quartzite, sandstone, and limestone), which allowed for a diverse range
+of morphologies and potential active percussion areas. The experimental
+sample is dominated by flakes with feather terminations (n = 121;
+90.3%), followed by flakes with hinge terminations (n = 10; 7.46%).
+
+``` r
+Data1 <- read.csv("Data/Data1.csv", sep = " ")
+load("Data/Data2.RData")
+library(tidyverse); library(caret)
+```
+
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+    ## ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+    ## ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+    ## ✔ purrr     1.0.2     
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+    ## Loading required package: lattice
+    ## 
+    ## 
+    ## Attaching package: 'caret'
+    ## 
+    ## 
+    ## The following object is masked from 'package:purrr':
+    ## 
+    ##     lift
+
+Initial flake mass was recorded using a Sytech SY-BS502 with a precision
+of 0.01 grams. Average weight of the samples was 47.38 g, with 50% of
+flakes weighing between 18.07 and 63.16 g, and a standard deviation of
+36.48. Figure 1 presents the flake mass distribution for the
+experimental sample, indicating a long tail of 14 flakes weighing more
+than 100 g.
+
+The transversal section of flakes is considered to have an important
+effect on estimations derived from the geometric index of unifacial
+reduction (GIUR) \[[22](#ref-kuhn_geometric_1990)\] and height of
+retouch. In particular, when a flake’s dorsal surface is parallel to the
+ventral surface, the GIUR and height of retouch will only marginally or
+will not at all increase after each resharpening episode, resulting in
+underestimations of flake mass removal
+\[[8](#ref-dibble_middle_1995),[42](#ref-eren_kuhns_2009)\]. However,
+the actual effect of the “flat flake problem” on the estimation of flake
+mass might be marginal
+\[[43](#ref-hiscock_reality_2009),[44](#ref-hiscock_experimental_2005)\].
+The present study recorded flake schematic transversal section prior to
+retouch of each flake, with possible categories being: circular (n =
+20), triangular (n = 63), triangular asymmetric (n = 29), trapezoidal (n
+= 13) and trapezoidal asymmetric (n = 9). The first three categories are
+considered to represent cases where the “flat flake problem” is not
+present, while the latter two are consider to represent cases were this
+problem is present.
+
+``` r
+Data0 <- read.csv("Data/Data0.csv", sep = ",")
+
+Summary_Assem <- data.frame(
+  rbind(data.frame(data.matrix(summary(Data0$L.mm))) %>% t(),
+        data.frame(data.matrix(summary(Data0$W.mm))) %>% t(),
+        data.frame(data.matrix(summary(Data0$T.mm))) %>% t(),
+        data.frame(data.matrix(summary(Data0$Max.Thick.mm))) %>% t(),
+        data.frame(data.matrix(summary(Data0$Mean.Edge.Angle.Selected.ret))) %>% t()))
+Measure <- c("Length", "Width", "Middle Thickness", "Maximum thick",
+             "Mean angle edge prior to retouch")
+Summary_Assem <- cbind(Measure, Summary_Assem)
+rownames(Summary_Assem) <- 1:nrow(Summary_Assem)
+print(Summary_Assem)
+```
+
+    ##                            Measure Min. X1st.Qu. Median     Mean X3rd.Qu.
+    ## 1                           Length 24.5  50.9500 62.600 63.23060   75.800
+    ## 2                            Width 17.4  40.7000 47.250 49.94552   58.250
+    ## 3                 Middle Thickness  4.2   9.8250 13.400 14.46194   18.625
+    ## 4                    Maximum thick  6.0  12.0250 15.800 16.57313   20.000
+    ## 5 Mean angle edge prior to retouch 13.5  33.0825 39.835 41.27119   48.670
+    ##     Max.
+    ## 1 106.70
+    ## 2  90.40
+    ## 3  34.70
+    ## 4  36.00
+    ## 5  72.33
+
+``` r
+rm(Data0)
+```
+
+``` r
+Data1 %>% 
+  filter(Episode == 0) %>% 
+  ggplot(aes(Or.Weight.g)) +
+  geom_histogram(binwidth = 10,
+                 color = "black", fill = "gray", 
+                 boundary = 0) +
+  theme_light() +
+  ylab("Frequency") +
+  xlab("Mass (g)") +
+  scale_x_continuous(breaks = seq(0, 210, 10)) +
+  scale_y_continuous(breaks = seq(0, 30, 2)) +
+  theme(
+    axis.text = element_text(color = "black", size = 6),
+    axis.title = element_text(color = "black", size = 10, face = "bold"))
+```
+
+![](Report_files/figure-gfm/histogram-initial-mass-1.png)<!-- -->
+
 ## **References**
 
 </div>
@@ -619,6 +730,38 @@ of stone-tool reduction: Establishing frames of reference to approximate
 occupational features and formation processes in Paleolithic societies.
 Journal of Anthropological Archaeology. 2016;41: 231–245.
 doi:[10.1016/j.jaa.2016.01.004](https://doi.org/10.1016/j.jaa.2016.01.004)</span>
+
+</div>
+
+<div id="ref-eren_kuhns_2009" class="csl-entry">
+
+<span class="csl-left-margin">42.
+</span><span class="csl-right-inline">Eren MI, Sampson CG. Kuhn’s
+Geometric Index of Unifacial Stone Tool Reduction (GIUR): Does it
+measure missing flake mass? Journal of Archaeological Science. 2009;36:
+1243–1247.
+doi:[10.1016/j.jas.2009.01.011](https://doi.org/10.1016/j.jas.2009.01.011)</span>
+
+</div>
+
+<div id="ref-hiscock_reality_2009" class="csl-entry">
+
+<span class="csl-left-margin">43.
+</span><span class="csl-right-inline">Hiscock P, Clarkson C. The reality
+of reduction experiments and the GIUR: Reply to Eren and Sampson.
+Journal of Archaeological Science. 2009;36: 1576–1581.
+doi:[10.1016/j.jas.2009.03.019](https://doi.org/10.1016/j.jas.2009.03.019)</span>
+
+</div>
+
+<div id="ref-hiscock_experimental_2005" class="csl-entry">
+
+<span class="csl-left-margin">44.
+</span><span class="csl-right-inline">Hiscock P, Clarkson C.
+Experimental evaluation of Kuhn’s geometric index of reduction and the
+flat-flake problem. Journal of Archaeological Science. 2005;32:
+1015–1022.
+doi:[10.1016/j.jas.2005.02.002](https://doi.org/10.1016/j.jas.2005.02.002)</span>
 
 </div>
 
