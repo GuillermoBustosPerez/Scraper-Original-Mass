@@ -712,9 +712,11 @@ Predicting original scraper mass and amount of mass lost by retouch has long bee
 Guillermo Bustos-Pérez is postdoctoral researcher at the Department of Human Origins (Max Planck Institute for Evolutionary Anthropology). Several people have contributed to the improvement of the draft and testing the Original Scraper Mass Calculator. Shannon McPherron made suggestions to strength the analysis, test for overfitting and reviewed the early version of the manuscript. Etienne Nouraud helped test the first online deployment of the Original Scraper Mass Calculator and made suggestions for its improvement. We would like to thank both reviewers made important suggestions to improve and clarify the manuscript.    
 \ 
 
+</div> 
+
 ## **7. References**   
 
-</div> 
+
 
 
 
