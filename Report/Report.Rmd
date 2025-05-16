@@ -1,5 +1,5 @@
 ---
-title: 'Scraper original mass: a different approach and its wide range implementation'
+title: '"Finding the Original Mass: a machine learning model and its deployment for lithic scrapers"'
 author: "Guillermo Bustos-Pérez"
 output:
   bookdown::markdown_document2:
