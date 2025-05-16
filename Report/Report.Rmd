@@ -28,7 +28,7 @@ $^{(2)}$ Institut Català de Paleoecologia Humana i Evolució Social (IPHES-CERC
 $^{(3)}$ Departament d’Història i Història de l’Art, Universitat Rovira i Virgili, Tarragona, Spain.  
 
 
-<div align="justify">   
+<div style="text-align: justify;">     
 
 ## **Abstract**
 
