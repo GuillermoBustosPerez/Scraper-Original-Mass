@@ -1,6 +1,6 @@
 # **General information**    
 
-**Title:** Original Scraper Mass Calculator    
+**Title:** Finding the Original Mass: a machine learning model and its deployment for lithic scrapers.    
 **Author**: Guillermo Bustos-Pérez $^{(1,2,3)}$   
 
 $^{(1)}$ Department of Human Origins, Max Planck Institute for Evolutionary Anthropology, Leipzig.    
