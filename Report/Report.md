@@ -86,7 +86,8 @@ more intensive retouch, or shifts in technological strategies of
 transport, thus informing about the cultural choices and patterns of
 past human groups
 \[[26](#ref-blades_end_2003),[27](#ref-andrefsky_reduction_2008)\].
-Finally, curation also relates to tool use and use-wear analysis.
+Finally, curation also relates to tool use and use-wear analysis.  
+ 
 
 Because of these reasons, predicting original scraper mass is a major
 goal in lithic analysis. Thus far, two approaches are employed to
@@ -125,6 +126,8 @@ spite of their elegance, objectivity and replicability, are only useful
 if the results obtained from them are directly applicable to
 archaeological materials”*.
 
+ 
+
 To overcome the limitations from these results, three approaches are
 commonly undertaken:
 
@@ -151,6 +154,12 @@ commonly undertaken:
     or different logarithmic transformations
     \[[39](#ref-davis_quantifying_1998),[40](#ref-shott_flake_2000),[43](#ref-bustos-perez_predicting_2021),[44](#ref-bustos-perez_multiple_2022),[47](#ref-clarkson_estimating_2011),[48](#ref-maloney_experimental_2020)\].
 
+ 
+
+Additionally, although more commonly in core reduction studies, some
+authors have suggested approaching reduction by the combination of
+multiple indexes in order to mitigate possible errors
+\[[8](#ref-dibble_middle_1995),[50](#ref-douglass_core_2018),[51](#ref-lombao_establishing_2023)\].
 It can be considered that these additions and improvements have provided
 correlation values of original flake mass on scrapers which allow for
 comparisons at the assemblage level. However, estimations at the
@@ -170,7 +179,7 @@ component of the curated concept
 Third, most archaeological research addressing the prediction of
 original flake/scraper mass result in equations which might be difficult
 to extrapolate and practically apply other archaeological assemblages
-\[[20](#ref-shott_use_2017),[39](#ref-davis_quantifying_1998),[50](#ref-morales_distribution_2016)\].
+\[[20](#ref-shott_use_2017),[39](#ref-davis_quantifying_1998),[52](#ref-morales_distribution_2016)\].
 Recently
 \[[43](#ref-bustos-perez_predicting_2021),[44](#ref-bustos-perez_multiple_2022)\],
 the use of machine learning has allowed the implementation of feature
@@ -193,6 +202,8 @@ implemented through a Shiny app “Original Scraper Mass Calculator
 v.1.0”, which allows the user to manually introduce the data from a
 scraper to estimate its original mass or to upload all data at once and
 download the results.
+
+ 
 
 ## 1.3 **2. Materials and methods**
 
@@ -222,7 +233,7 @@ underestimations of flake mass removal
 \[[8](#ref-dibble_middle_1995),[30](#ref-eren_kuhns_2009)\]. However,
 the actual effect of the *“flat flake problem”* on the estimation of
 flake mass might be marginal
-\[[51](#ref-hiscock_reality_2009),[52](#ref-hiscock_experimental_2005)\].
+\[[53](#ref-hiscock_reality_2009),[54](#ref-hiscock_experimental_2005)\].
 The present study recorded flake schematic transversal section prior to
 retouch of each flake, with possible categories being: circular (n =
 20), triangular (n = 63), triangular asymmetric (n = 29), trapezoidal (n
@@ -288,6 +299,8 @@ Data2 %>% group_by(Flake.ID) %>%
 mass distribution for the experimental sample of flakes
 </p>
 
+ 
+
 All flakes were retouched until they were too small to hold while
 retouching (n = 4), they broke during retouch (n = 74), or the angle of
 retouch was too abrupt to detach additional resharpening flakes (n =
@@ -304,10 +317,12 @@ Most flakes underwent between four and seven episodes of retouch
 retouch. The experimental assemblage provided a total of 694
 resharpening episodes with which to train the predictive models.
 
+ 
+
 ### 1.3.2 **2.2 Feature selection**
 
 Based on previous research
-\[[31](#ref-kuhn_geometric_1990),[42](#ref-dogandzic_edge_2015),[43](#ref-bustos-perez_predicting_2021),[52](#ref-hiscock_experimental_2005)\]
+\[[31](#ref-kuhn_geometric_1990),[42](#ref-dogandzic_edge_2015),[43](#ref-bustos-perez_predicting_2021),[54](#ref-hiscock_experimental_2005)\]
 variables were recorded as predictive features. After each episode of
 retouch, the following variables were recorded:
 
@@ -329,7 +344,7 @@ retouch, the following variables were recorded:
 
 -   Three equidistant measures of height of retouch (t) and the
     corresponding thickness (T) of the flake
-    \[[52](#ref-hiscock_experimental_2005)\] measured in mm (with a
+    \[[54](#ref-hiscock_experimental_2005)\] measured in mm (with a
     precision of 0.1). The average of these three points is used as a
     predictive feature. Here it is considered that the average height of
     the retouch will serve as a proxy of mass removed from the scrapper.
@@ -357,10 +372,10 @@ forest and gradient boosting machine.
 
 Multiple linear regression (MLR) extends the simple linear regression in
 such a way that it can directly accommodate multiple predictors
-\[[53](#ref-james_introduction_2013): 71\].
+\[[55](#ref-james_introduction_2013): 71\].
 
 Support vector machines for regression
-\[[54](#ref-awad_support_2015),[55](#ref-cortes_support-vector_1995)\]
+\[[56](#ref-awad_support_2015),[57](#ref-cortes_support-vector_1995)\]
 with a linear kernel (SVML) fit a linear hyperplane and a margin of
 error which allows for errors of points falling inside the margin.
 Points falling outside the margin define the support vectors. This
@@ -369,15 +384,15 @@ margin while minimizing the error, and which is also robust to the
 presence of outliers.
 
 Random forest for regression selects random samples of the data and
-builds decision trees for prediction \[[56](#ref-breiman_random_2001)\].
+builds decision trees for prediction \[[58](#ref-breiman_random_2001)\].
 As a result, each tree is built from different combinations of the data,
 and the average is used as prediction. This adds diversity, reduces
 overfit, and provides high-accuracy predictions
-\[[57](#ref-lantz_machine_2019)\].
+\[[59](#ref-lantz_machine_2019)\].
 
 The gradient boosting machine (GBM) is an ensemble method that builds up
 a final model by incrementally improving an existing one
-\[[58](#ref-friedman_stochastic_2002),[59](#ref-friedman_greedy_2001)\].
+\[[60](#ref-friedman_stochastic_2002),[61](#ref-friedman_greedy_2001)\].
 The first model uses an initial *“shallow tree”* with a constant value
 (average of the labels). Following this initial model, a new tree (*weak
 learner*) is fitted to predict the residuals of the model, contributing
@@ -393,31 +408,38 @@ ratio of a stone tool (percentage of mass remaining relative to its
 original mass). Calculating the curation ratio of a stone tool can be
 formulated as:
 
+ 
+
 100 − ((*M*/*E**O**M*) \* 100)
-  Where:
+
+ 
+
+Where:
 
 M = mass (directly measured on the scraper).
 
 EOM = estimated original mass (provided by the model).
 
+ 
+
 Models of both predictions (original scraper mass and curation ratio)
 are compared using four measures of performance: *r*<sup>2</sup>, MAE,
 RMSE, and MAPE. *r*<sup>2</sup> is a measure of linear correlation and
 of how much of the observed variation is explained by the model
-\[[53](#ref-james_introduction_2013)\]. In lithic studies, a
+\[[55](#ref-james_introduction_2013)\]. In lithic studies, a
 categorization of the predictive power of indices has been proposed
 based on their *r*<sup>2</sup> values
-\[[60](#ref-hiscock_generalization_2010)\], where \<0.1 is low, 0.1–0.25
+\[[62](#ref-hiscock_generalization_2010)\], where \<0.1 is low, 0.1–0.25
 is moderate, 0.26–0.5 is fairly large/strong, 0.51–0.8 is very
 large/strong and \>0.8 is extremely large/strong
-\[[60](#ref-hiscock_generalization_2010)\]. However, it is important to
+\[[62](#ref-hiscock_generalization_2010)\]. However, it is important to
 consider that different distributions of data can result in same or
-similar *r*<sup>2</sup> values \[[61](#ref-anscombe_graphs_1973)\].
+similar *r*<sup>2</sup> values \[[63](#ref-anscombe_graphs_1973)\].
 
 Mean average error (MAE), root mean squared error (RMSE), and mean
 average percentual error (MAPE) provide summary values of how far
 predictions fall from the true value
-\[[53](#ref-james_introduction_2013),[57](#ref-lantz_machine_2019)\].
+\[[55](#ref-james_introduction_2013),[59](#ref-lantz_machine_2019)\].
 MAE measures the average magnitude of errors, regardless of signal. RMSE
 also provides a measure of distance between predicted and actual values,
 although it punishes large errors. RMSE is usually compared to the
@@ -432,9 +454,9 @@ general, better models will have lower values of MAE, RMSE, and MAPE.
 Collinearity of the predictors is addressed through the variance
 inflation factor (VIF). VIF provides a measure of correlation between
 predictors and their effects on the model. In the present study VIF is
-calculated using the R package *car* v.3.1.2. \[[62](#ref-fox_r_2018)\].
+calculated using the R package *car* v.3.1.2. \[[64](#ref-fox_r_2018)\].
 Common thresholds for VIF values
-\[[63](#ref-marquardt_generalized_1970),[64](#ref-obrien_caution_2007)\]
+\[[65](#ref-marquardt_generalized_1970),[66](#ref-obrien_caution_2007)\]
 range between 1 to 10 (considered inconsequential); 10 to 30 (cause for
 concern), and higher than 30 (seriously harmful). At present, the
 package *car* v.3.1.2 only allows for the calculation of the variance
@@ -450,18 +472,8 @@ collinearity can be considered especially harmful, since collinearity
 present in the training dataset might not be present on new data on
 which to make predictions. However, since structural collinearity is the
 result of existing variables, it is expected to be present at training
-and new. It is expected that the GIUR index and average height of
-retouch will present higher values of structural collinearity. In order
-to further address the effect of collinearity, a principal component
-analysis (PCA) was performed on the four variables, and a new model was
-trained on the Principal Components (PC) adding up to more than 90% of
-variance. PCA is common dimensionality reduction technique which allows
-to eliminate collinearity between predictors, while minimizing the loss
-of information \[[65](#ref-naes_understanding_2001)\]. The distribution
-of predictions from both models are compared through Kolmogorov-Smirnov
-test. If collinearity between predictors is having causing overfit, the
-distribution of predicted values will be statistically significantly
-different.
+and unseen data. It is expected that the GIUR index and average height
+of retouch will present higher values of structural collinearity.
 
 Models were evaluated using a k-fold cross validation. In k-fold cross
 validation, the dataset is randomly shuffled and divided into k folds.
@@ -480,17 +492,16 @@ graphically evaluated. A regression plot provides a scatter plot of
 predicted and true values along its regression line. In a good model,
 the regression line will pass through the center of all points, which
 will be evenly distributed above and below, and outliers are visible.
+Best performing model was selected based on metric performances values
+and visual evaluation of the regression plots.
 
-The distribution of residuals (difference between predicted and actual
-values) allows for an evaluation of bias in the model. In the present
-study residuals are used in combination with transversal section and
-different intervals of the GIUR index in order to determine possible
-bias or limitations of the model. Residuals plots of a good model will
-have the points evenly distributed around zero across the range of the
-independent variables, and no statistical difference will exist between
-the categories of flake transversal section or GIUR intervals.
-Evaluation of residuals is only undertaken for the considered best
-model.
+ 
+
+The selected best model underwent additional testing to rule out
+possible overfitting due to the inclusion of multiple reshapening
+episodes, collinearity between variables, evaluate it’s ability to
+predict curation along the reduction process, original flake size, and
+to accuratly capture Weibull estimates and survival curves.
 
 The evaluation of models using the k-fold cross validation was performed
 using the complete dataset of 698 resharpening episodes from the 134
@@ -503,50 +514,123 @@ selection of 10% (n = 13) of flakes and all their resharpening episodes
 were removed from the training set and the remaining sample used to
 train the previously selected best model. This process was repeated
 until 100000 predictions were obtained and then the four measures of
-performance were calculated. In this scenario, a significant decrease in
-model performance suggests overfitting in the full sample that includes
-multiple stages of the same flake.  
-Additionally, two models were trained for comparison using the sample of
-134 flakes. The first model uses the same set of variables from
-Bustos-Pérez & Baena Preysler \[[44](#ref-bustos-perez_multiple_2022)\]
-in order to predict original flake mass (log transformed). The second
-model used log transformations of platform size and maximum thickness
-along with exterior platform angle as predictive variables in order to
-predict the cubic root of flake mass. Both models were trained using a
-multiple linear regression, and predicted values were transformed to the
-linear scale in order to compare performance metrics with those of the
-best model from the current study.
+performance were calculated. Additional to this, ten models were trained
+using only one resharpening episode per flake (training set = 134) and
+then used to predict on the remaining resharpening episodes (test set =
+564). This allows to evaluate weather repeated values of original flake
+mass are resultingg in an overfitting of the best model. In both
+scenarios, a significant decrease in model performance would suggests
+overfitting, although a decrease in the predictive accuracy of the model
+is expected since significant proportion of information has been
+removed.  
+In order to further address the effect of collinearity among the best
+model, a principal component analysis (PCA) was performed on the four
+variables, and a new model was trained on the Principal Components (PC)
+adding up to more than 90% of variance. PCA is common dimensionality
+reduction technique which allows to eliminate collinearity between
+predictors, while minimizing the loss of information
+\[[67](#ref-naes_understanding_2001)\]. The distribution of predictions
+from both models are compared through Kolmogorov-Smirnov test. If
+collinearity between predictors is having causing overfit, the
+distribution of predicted values will be statistically significantly
+different. Additionally, two additional models excluding GIUR and
+average height of retouch (*t*) were trained and their performance
+metrics were compared in order to evaluate the possible redundancy of
+features.
+
+The limitations of the best model are explored in five manners. First,
+the distribution of residuals (difference between predicted and actual
+values) is used in combination with transversal section of flakes to
+determine if the predictions are affected by the *flat flake problem*.  
+Second, the distribution of residuals from estimating curation was
+analyzed according to true curation ratio (in order to determine if the
+quality of predictions changes along the reduction sequence), according
+to original flake mass (to determine if a bias due to original flake
+mass is present), and according to predicted flake mass. Residuals of
+estimating flake mass compared to prediction of flake mass are also
+included. Residuals plots of a good model will have the points evenly
+distributed around the zero value across the range of the independent
+variables (Shapiro-Wilks test are performed in order to determine the
+normal distribution of residuals from estimating origina mass and
+curation ratio).
+
+Third, different GIUR intervals are used to evaluate distribution of
+residuals. While original flake mass and actual curated ratio are
+appropriate variables to evaluate possible bias of the model, they are
+not truly known from the archaeological record. The GIUR value (and its
+intervals) can be obtained from archaeological scrapers and they can
+serve as a proxy on how reliable are predictions.
+
+Fourth, curation ratios are evaluated per resharpening event, allowing
+to determine if over or underestimations are present. Finally, the
+Weibull distributions and survival curves of the experimental assemblage
+are fitted. Weibull distributions and survival curves are used to
+analyze the distribution of reduction among lithic assemblages
+\[[14](#ref-shott_use_2005),[50](#ref-douglass_core_2018),[52](#ref-morales_distribution_2016),[68](#ref-shott_weibull_2002)–[71](#ref-shott_curation_2015)\].
+Weibull distribution provides two parameters: *β* and *η*. The *β*
+parameter is indicative of the shape of the distribution, were a value
+bellow one indicates early discard, a value of one indicates constant
+discard, and a value above one indicates increasing failure with use.
+The *η* is indicative of the characteristic life/curation at which
+artifacts are discarded \[[68](#ref-shott_weibull_2002)\]. Survival
+curves of stone tools are classified into three types based on their
+shape \[[50](#ref-douglass_core_2018),[69](#ref-shott_modeling_2004)\].
+Type I represents cases were discard occurs with greater us; Type II
+represent cases were discard is constant with its use; and Type III
+represents cases were discard occurs early. The present study fits and
+compares the Weibull distributions and survival curves of the actual and
+predicted curated ratios from the experimental sample.
+
+ 
+
+Finally, two models were trained for comparison using the sample of 134
+flakes. The first model uses the same set of variables from Bustos-Pérez
+& Baena Preysler \[[44](#ref-bustos-perez_multiple_2022)\] in order to
+predict original flake mass (log transformed). The second model used log
+transformations of platform size and maximum thickness along with
+exterior platform angle as predictive variables in order to predict the
+cubic root of flake mass. Both models were trained using a multiple
+linear regression, and predicted values were transformed to the linear
+scale in order to compare performance metrics with those of the best
+model from the current study.
+
+ 
 
 The complete workflow was developed in RStudio IDE v.2024.04.02
-\[[66](#ref-rstudio_team_rstudio_2019)\] using the R programming
-language v.4.4.1 \[[67](#ref-r_core_team_r_2019)\]. The package
-tidyverse v.2.0.0 \[[68](#ref-wickham_welcome_2019)\] was employed for
+\[[72](#ref-rstudio_team_rstudio_2019)\] using the R programming
+language v.4.4.1 \[[73](#ref-r_core_team_r_2019)\]. The package
+tidyverse v.2.0.0 \[[74](#ref-wickham_welcome_2019)\] was employed for
 data manipulation and representation. Multiple linear regression uses
-the R package MASS v.7.3.60.2 \[[69](#ref-venables_modern_2002)\], SVM
+the R package MASS v.7.3.60.2 \[[75](#ref-venables_modern_2002)\], SVM
 with linear kernel uses package kernlab v.0.9.32
-\[[70](#ref-karatzoglou_kernlab_2004)\], the random forest model uses
+\[[76](#ref-karatzoglou_kernlab_2004)\], the random forest model uses
 packages e1071 v.1.7.14 and ranger v.0.16.0
-\[[70](#ref-karatzoglou_kernlab_2004),[71](#ref-wright_ranger_2015)\],
+\[[76](#ref-karatzoglou_kernlab_2004),[77](#ref-wright_ranger_2015)\],
 and GBM uses package gbm v.2.2.2
-\[[72](#ref-ridgeway_generalized_2007)\]. Training and validation of
+\[[78](#ref-ridgeway_generalized_2007)\]. Training and validation of
 models was done using the package caret v.6.0.94
-\[[73](#ref-kuhn_building_2008)\]. The “Original Scraper Mass
-Calculator” which implements the model through a user friendly interface
-was written using the shiny package v.1.8.1.1
-\[[74](#ref-chang_package_2015)–[76](#ref-wickham_mastering_2021)\]. All
+\[[79](#ref-kuhn_building_2008)\]. Weibull distributions were fitted
+using package MASS v.7.3.60.2 \[[75](#ref-venables_modern_2002)\], and
+survival curves were fitted using the survival v.3.8.3 package
+\[[80](#ref-therneau_survival_2024)\] and plotted using survminer
+package v.0.5.0 \[[81](#ref-kassambara_survminer_2024)\]. The “Original
+Scraper Mass Calculator” which implements the model through a user
+friendly interface was written using the shiny package v.1.8.1.1
+\[[82](#ref-chang_package_2015)–[84](#ref-wickham_mastering_2021)\]. All
 data, code is made publicly available through a public repository
 organized following the structure of a research compendium
-\[[77](#ref-marwick_packaging_2018)\] and using a markdown document
+\[[85](#ref-marwick_packaging_2018)\] and using a markdown document
 through package bookdown v.0.39
-\[[78](#ref-mcnamara_dynamic_2014)–[80](#ref-xie_bookdown_2016)\].  
+\[[86](#ref-mcnamara_dynamic_2014)–[88](#ref-xie_bookdown_2016)\].  
 All data and the complete workflow of analysis is available as a
-research compendium \[[77](#ref-marwick_packaging_2018)\] at Github
+research compendium \[[85](#ref-marwick_packaging_2018)\] at Github
 (<https://github.com/GuillermoBustosPerez/Scraper-Original-Mass/tree/main>).
 The complete code and files of the Original Scraper Mass calculator
 v.1.0.0 is also available at Github
 (<https://github.com/GuillermoBustosPerez/Original-Scraper-Mass-Calculator>),
 and the final implementation of the application can be accessed at:
-<https://guillermo-bustos-perez.shinyapps.io/Original-Scraper-Mass-Calculator/>  
+<https://guillermo-bustos-perez.shinyapps.io/Original-Scraper-Mass-Calculator/>
+
  
 
 ## 1.4 **3. Results**
@@ -599,6 +683,8 @@ retouch (t), of the experimental assemblage according to each
 resharpening event.
 </p>
 
+ 
+
 In general, the GIUR remains fairly unidirectional, with increasing
 values after each episode of resharpening. The average GIUR after the
 first resharpening episode was 0.33. The first maximum GIUR value (1)
@@ -611,6 +697,8 @@ episodes. Average height of retouch (t) decreases progressively
 afterwards to a value of 10.8 mm on episode 10 of retouch. This decrease
 in average t is result of retouch reaching the upper dorsal side of
 flakes and diminishing the overall thickness.
+
+ 
 
 Maximum thickness (Figure 3) remained fairly constant among all the
 resharpening events, although the range of values decreases with each
@@ -649,6 +737,8 @@ Data2 %>% select(Episode, Max.Thick.mm) %>%
 violin plots of maximum thickness.
 </p>
 
+ 
+
 ### 1.4.2 **3.2 Evaluation of regression models.**
 
 Table 2 presents performance metrics of each of the regression models
@@ -673,6 +763,8 @@ present regression lines with evenly distributed predictions, indicative
 of an absence of bias. However, it is observed for the multiple linear
 regression and SVM that with increasing flake mass, the range of
 predictions becomes more dispersed.
+
+ 
 
 ``` r
 source("Scripts/12-tidy-model-predictions.R")
@@ -713,6 +805,8 @@ kableExtra::kable(digits = 3)
 <span id="tab:table-models-results"></span>Table 1.2: Table 2.
 Performance metrics of regression models for predicting original flake
 mass
+
+ 
 
 ``` r
 ggpubr::ggarrange(
@@ -803,6 +897,8 @@ Regression plots of each of the trained models when predicting original
 flake mass.
 </p>
 
+ 
+
 Percentage of flake mass consumed by retouch (curation) was calculated
 using estimations of original flake mass for each model and each episode
 of resharpening. Table 3 presents performance metrics of the four models
@@ -813,17 +909,19 @@ on predictions of original mass. Of the four models, only random forest
 and GBM presented adequate performance metrics. Multiple linear
 regression presented the lowest performance values, with a linear
 correlation value of 0.113, while SVM with linear kernel presented a
-significant higher (but still unsatisfactory) r2 value of 0.399. Both
-models also presented RMSE values higher than the standard deviation of
-percentage of mass lost through retouch (SD = 15.92). Visual evaluation
-of the regression plots indicates that the low performance metrics from
-both models (multiple linear regression and SVM with linear kernel) seem
-to be caused by underestimations original flake mass when a small
-percentage of flake mass has been removed by retouch. As a result,
-multiple linear regression estimated an original scraper mass value
-lower than remaining scraper mass in 127 cases. SVM with linear kernel
-estimated an original scraper mass lower than remaining scraper mass in
-118 cases.
+significant higher (but still unsatisfactory) *r*<sup>2</sup> value of
+0.399. Both models also presented RMSE values higher than the standard
+deviation of percentage of mass lost through retouch (SD = 15.92).
+Visual evaluation of the regression plots indicates that the low
+performance metrics from both models (multiple linear regression and SVM
+with linear kernel) seem to be caused by underestimations original flake
+mass when a small percentage of flake mass has been removed by retouch.
+As a result, multiple linear regression estimated an original scraper
+mass value lower than remaining scraper mass in 127 cases. SVM with
+linear kernel estimated an original scraper mass lower than remaining
+scraper mass in 118 cases.
+
+ 
 
 ``` r
 ggpubr::ggarrange(
@@ -933,21 +1031,26 @@ Regression plots of each of the models when predicting the curated ratio
 of each of the episodes of retouch.
 </p>
 
+ 
+
 Linear correlation values indicate that random forest and GBM perform at
-least twice as well than the SVM with linear kernel, with respective r2
-values of 0.839 (random forest), and 0.805 (GBM). Both models also
-present RMSE values lower than the SD of the sample, indicative of a
-good fit of the model. The random forest model presents the best
-performance metrics, with the highest linear correlation value (r2 =
-0.839) and lowest values for MAE (4.662), RMSE (6.485) and MAPE (0.365).
-Random forest is closely followed by the GBM model, with a linear
-correlation value of 0.805. Visual evaluation of the regression plots
-(Figure 5) reinforces the notion of the good performance of random
-forest and GBM. In both cases prediction points are evenly distributed
-among the regression lines, and clustering of points in the lower values
-(due to over or underestimation of curation) are absent. GBM estimated
-an original scraper mass lower than the remaining scraper mass in 8
-cases, while random forest made the same error in only three cases.
+least twice as well than the SVM with linear kernel, with respective
+*r*<sup>2</sup> values of 0.839 (random forest), and 0.805 (GBM). Both
+models also present RMSE values lower than the SD of the sample,
+indicative of a good fit of the model. The random forest model presents
+the best performance metrics, with the highest linear correlation value
+(*r*<sup>2</sup> = 0.839) and lowest values for MAE (4.662), RMSE
+(6.485) and MAPE (0.365). Random forest is closely followed by the GBM
+model, with a linear correlation value of 0.805. Visual evaluation of
+the regression plots (Figure 5) reinforces the notion of the good
+performance of random forest and GBM. In both cases prediction points
+are evenly distributed among the regression lines, and clustering of
+points in the lower values (due to over or underestimation of curation)
+are absent. GBM estimated an original scraper mass lower than the
+remaining scraper mass in 8 cases, while random forest made the same
+error in only three cases.
+
+ 
 
 ``` r
 data.frame(
@@ -989,20 +1092,6 @@ retouch (curation)
 
  
 
-None of the predictive variables in the multiple linear regression model
-presented VIF values above the threshold of 10. Average height of
-retouch (t) presented the highest VIF value (7.27), followed by the GIUR
-index (4.59). Log transformed maximum thickness and remaining scraper
-mass presented respective VIF values of 3.81 and 2.35. PC1 (68.17%) and
-PC2 (26.55%) add up to 94.72% of variance and were selected to train a
-new Random Forest. When comparing the distribution of predictions from
-both models, no statistically significant difference was fount (D =
-0.039; p-value = 0.67), indicating that the predictions from both models
-come from the same distribution, and that the original model is not
-affected by collinearity.
-
- 
-
 ### 1.4.3 **3.3 Bias, limitations of the best model (random forest) and comparison with other models.**
 
 The episodes of resharpening generated 130 cases where the flat flake
@@ -1013,7 +1102,11 @@ for all episodes of resharpening. When selecting flakes that had four or
 more resharpening episodes, no statistical significance is observed for
 the residual distribution (t = -0.79; p = 0.43). This indicates that for
 the given sample, and the given predictive variables, random forest
-predictions are not affected by the flat flake problem.
+predictions are not affected by the flat flake problem. A K-S showed no
+statistical difference between the distribution of observed and
+predicted original flake mass (D = 0.035; p = 0.8).
+
+ 
 
 ``` r
 ggpubr::ggarrange(
@@ -1066,6 +1159,27 @@ distribution of estimated curation according to actual curation and
 original flake mass.
 </p>
 
+ 
+
+None of the predictive variables in the multiple linear regression model
+presented VIF values above the threshold of 10. Average height of
+retouch (t) presented the highest VIF value (7.27), followed by the GIUR
+index (4.59). Log transformed maximum thickness and remaining scraper
+mass presented respective VIF values of 3.81 and 2.35. PC1 (68.17%) and
+PC2 (26.55%) add up to 94.72% of variance and were selected to train a
+new Random Forest. When comparing the distribution of predictions from
+both models, no statistically significant difference was fount (D =
+0.039; p-value = 0.67), indicating that the predictions from both models
+come from the same distribution, and that the original model is not
+affected by collinearity. Model training leaving out either GIUR index
+or average t resulted in similar performance metrics to those of the
+complete model. The performance metrics decreased slightly more when
+GIUR index was removed (*r*<sup>2</sup> = 0.969, MAE = 3.661; RMSE =
+6.415, MAPE = 7.616), than when average height of retouch was removed
+(*r*<sup>2</sup> = 0.971, MAE = 3.556; RMSE = 6.237, MAPE = 7.177).
+
+ 
+
 Figure 6 presents the distributions of curation residuals (difference
 between actual curation and estimated curation) according to real
 curation and original flake mass. Average value of curation residuals
@@ -1082,7 +1196,71 @@ the residual distribution of curation (Kruskal-Wallis test: chi-squared
 = 65.38, df = 3, p \< 0.001), with respective average values being
 -2.12, -1.35, 1.04 and 7.81. Despite this, little difference is observed
 between the performance metrics of the first three intervals of curation
-Table 4.  
+Table 4.
+
+ 
+
+``` r
+ggpubr::ggarrange(
+  (
+    Predicted.RF %>% ggplot(aes(mean.pred, Residuals)) +
+      geom_point(alpha = 0.5, size = 0.8) +
+      annotate("rect",
+               xmin = -Inf, xmax = Inf, 
+               ymin = -6.7, ymax = 6.7,  fill = "gray", alpha = .3) +
+      theme_light() +
+      geom_hline(yintercept = 0, linetype = "dashed") +
+      xlab("Predicted flake mass (g)") +
+      ylab("Residuals from estimating flake mass") +
+      scale_x_continuous(breaks = seq(0, 220, 20), lim = c(0, 205)) +
+      scale_y_continuous(breaks = seq(-35, 50, 10), lim = c(-35, 50)) +
+      theme(
+        axis.text = element_text(color = "black", size = 6),
+        axis.title = element_text(color = "black", size = 7)
+      )),
+    (
+      Predicted.RF %>% ggplot(aes(mean.pred, Residual.Curated)) +
+        annotate("rect",
+                 xmin = -Inf, xmax = Inf, 
+                 ymin = -10, ymax = 10,  fill = "gray", alpha = .3) +
+        geom_point(alpha = 0.5, size = 0.8) +
+        theme_light() +
+        geom_hline(yintercept = 0, linetype = "dashed") +
+        xlab("Predicted flake mass (g)") +
+        ylab("Residuals from estimating curation") +
+        scale_x_continuous(breaks = seq(0, 220, 20), lim = c(0, 205)) +
+        scale_y_continuous(breaks = seq(-50, 30, 10), lim = c(-55, 30)) +
+        theme(
+          axis.text = element_text(color = "black", size = 6),
+          axis.title = element_text(color = "black", size = 7)
+        )
+    ),
+    ncol = 2
+    
+  )
+```
+
+<img src="Report_files/figure-markdown_github/res-pred-mass-1.png" alt="Figure 7. Residual distribution of estimated mass and curation ration according to predicted mass."  />
+<p class="caption">
+<span id="fig:res-pred-mass"></span>Figure 1.7: Figure 7. Residual
+distribution of estimated mass and curation ration according to
+predicted mass.
+</p>
+
+ 
+
+Figure 7 presents the distribution of residuals when estimating flake
+mass and curation according to predicted flake mass. In the first case
+it can be observed, that for a higher value of predicted flake mass,
+residuals will become more disperse along with an underestimation of
+flake mass. Results from parametric distribution indicates a non normal
+distribution of residuals from estimating original flake mass ( W =
+0.771; p \< 0.001). Residuals of curation according to estimated
+original mass present a much more even distribution (Figure 7).
+Residuals are evenly distributed along the zero value, although the
+model will be prone to underpredict curation ration for flakes predicted
+to have a mass higher than 120g.
+
  
 
 ``` r
@@ -1122,7 +1300,9 @@ significant differences is present among the residual distribution of
 curation (Kruskal-Wallis test: chi-squared = 26.9, df = 3, p \< 0.001),
 with respective average values being -1.58, -0.52, 2.75 and 5.05.
 
-GIUR values can be used as proxies for quality of predictions. Figure 7
+ 
+
+GIUR values can be used as proxies for quality of predictions. Figure 8
 presents the residuals (when predicting original flake mass)
 distribution of continuous GIUR values and the same divided into five
 intervals. A density plot indicates that, on a general level, residuals
@@ -1133,6 +1313,8 @@ residual values is present. This indicates that, although residuals are
 evenly distributed around 0, the accuracy of predictions from the random
 forest diminishes among heavily retouched flakes (with GIUR values above
 0.8).
+
+ 
 
 ``` r
 Data2 <- Data2 %>% mutate(
@@ -1195,17 +1377,19 @@ ggpubr::ggarrange(
     ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
     ## generated.
 
-<img src="Report_files/figure-markdown_github/residuals-GIUR-1.png" alt="Figure 7. Residual analysis according to GIUR intervals and continuous values using density, scatter and boxplots, when predicting flake mass."  />
+<img src="Report_files/figure-markdown_github/residuals-GIUR-1.png" alt="Figure 8. Residual analysis according to GIUR intervals and continuous values using density, scatter and boxplots, when predicting flake mass."  />
 <p class="caption">
-<span id="fig:residuals-GIUR"></span>Figure 1.7: Figure 7. Residual
+<span id="fig:residuals-GIUR"></span>Figure 1.8: Figure 8. Residual
 analysis according to GIUR intervals and continuous values using
 density, scatter and boxplots, when predicting flake mass.
 </p>
 
+ 
+
 Although knowing how many resharpening episodes an archaeological stone
 has undergone tool is unlikely, the availability of the data in a
 controlled experimentation allows for a better understanding of possible
-bias in the model. Figure 8 presents real and estimated values of
+bias in the model. Figure 9 presents real and estimated values of
 curation according to each resharpening episode. Considering all
 episodes of retouch, no statistically significant difference is present
 between values of predicted and actual curation (t = 1.12, df = 1382.7;
@@ -1219,7 +1403,8 @@ actual curation on flakes which have undergone eight or more
 resharpening episodes (t = -3.731, df = 48.493; p \< 0.001). This means
 that scrapers which have undergone multiple episodes of retouch, with
 more than 50% of their mass removed, will have underpredicted curated
-ratios (Figure 8).  
+ratios (Figure 9).
+
  
 
 ``` r
@@ -1242,7 +1427,12 @@ model when leaving out 10% of flakes and all their resharpening
 episodes. Performance metrics present marginally lower values (Table 2).
 The Linear correlation (*r*<sup>2</sup>) decreases from 0.974 to 0.96,
 MAE increases from 3.297 to 3.989, RMSE increases from 5.917 to 7.478,
-and MAPE increases from 6.775 to 7.929.
+and MAPE increases from 6.775 to 7.929. When random forests are trained
+using only one random observation per flake (training set = 134) and the
+remaining resharpening episodes are used as test set (n = 560), there is
+a decrease on variance explained by the model (*r*<sup>2</sup> = 0.939),
+while the average error increases by 1.634 g (MAE = 4.931) and remaining
+dispersion error metrics also increase (RMSE = 9.242; MAPE = 10.503).
 
  
 
@@ -1274,16 +1464,92 @@ Predicted.RF %>%
   )
 ```
 
-<img src="Report_files/figure-markdown_github/residuals-event-1.png" alt="Figure 8. Actual and estimated curation values for each resharpening episodes."  />
+<img src="Report_files/figure-markdown_github/residuals-event-1.png" alt="Figure 9. Actual and estimated curation values for each resharpening episodes."  />
 <p class="caption">
-<span id="fig:residuals-event"></span>Figure 1.8: Figure 8. Actual and
+<span id="fig:residuals-event"></span>Figure 1.9: Figure 9. Actual and
 estimated curation values for each resharpening episodes.
 </p>
 
-When compared to other models using the same sample of flakes (Table 6),
+``` r
+Real_Curation <- MASS::fitdistr(Predicted.RF$Real.Curated, "weibull")
+Pred_Curation <- MASS::fitdistr(abs(Predicted.RF$Pred.Curated), "weibull")
+```
+
+ 
+
+Table 6 presents the results from fitting the Weibull distributions to
+the observed and estimated curated values of the experimental sample.
+The *β* and *η* estimates for the estimated curation are slightly higher
+(0.19 and 1.804) than the actual values, which would indicate a more
+prolonged use life. Figure 10 presents the results from fitting
+survivalship curves from both (actual and estimated) curated values.
+Both curves present Type III profiles overlapping for most of the
+distribution, although differences are seen at the start and end of the
+curves. At the start of the curve, estimated values indicate a higher
+survival probability. At the end of the curve, survival for actual
+curated values will extend beyond the 65% value, while the curve from
+estimated values ends slightly above the 60% value.
+
+ 
+
+``` r
+data.frame(
+  Distribution = c("Observed curation", "Estimated curation"),
+  Beta = c(Real_Curation$estimate[[1]], Pred_Curation$estimate[[1]]),
+  Scale = c(Real_Curation$estimate[[2]], Pred_Curation$estimate[[2]])) %>% 
+  kable(digits = 3)
+```
+
+| Distribution       |  Beta |  Scale |
+|:-------------------|------:|-------:|
+| Observed curation  | 1.183 | 21.142 |
+| Estimated curation | 1.373 | 22.946 |
+
+<span id="tab:weibull-results"></span>Table 1.6: Table 6. Results from
+fitting Weibull distributions to the observed and estimated curation
+values
+
+ 
+
+``` r
+For.Surv.Curv <- Predicted.RF %>% pivot_longer(c(Real.Curated, Pred.Curated),
+                              names_to = "Type",
+                              values_to = "Values")
+                        
+# Plot the survival curves 
+fit <- survival::survfit(Surv(Values) ~ Type, data = For.Surv.Curv)
+
+survminer::ggsurvplot(fit, data = For.Surv.Curv,
+                      ggtheme = theme_light(),
+                      break.time.by = 10,
+                      conf.int = TRUE,
+                      xlab = "% Curated",
+                      palette = c("#E7B800", "#2E9FDF"),
+                      legend = "bottom",
+                      legend.labs = c("Predicted Curated", "Real Curated"),
+                      xlim = c(0, 70),
+                      legend.title = "")$plot +
+  annotate("segment", x = 0, y = 1, xend = 100, yend = 0,
+           colour = "gray50", linetype = "dashed", size = 1) +
+  scale_y_continuous(breaks = seq(0, 1, 0.1), lim = c(0, 1))
+```
+
+    ## Scale for y is already present.
+    ## Adding another scale for y, which will replace the existing scale.
+
+<img src="Report_files/figure-markdown_github/plot-survival-curves-1.png" alt="Figure 10. Survival curves of the actual and estimated values of curationn from the experimental sample."  />
+<p class="caption">
+<span id="fig:plot-survival-curves"></span>Figure 1.10: Figure 10.
+Survival curves of the actual and estimated values of curationn from the
+experimental sample.
+</p>
+
+ 
+
+When compared to other models using the same sample of flakes (Table 7),
 the random forest presents much better performance metrics. Neither of
-the two models presented linear correlation values (r2) above the 0.8
-threshold when predicting original flake mass.
+the two models presented linear correlation values (*r*<sup>2</sup>)
+above the 0.8 threshold when predicting original flake mass.
 
  
 
@@ -1296,7 +1562,7 @@ read.csv("Data/Results-other-two-models.csv") %>% kable()
 | Bustos-Perez & Baena, 2022 | 0.784 | 12.326 | 19.169 | 28.718 |
 | EPA, Platform, Max. Thick. | 0.636 | 15.159 | 23.102 | 38.157 |
 
-<span id="tab:rsults-alt-models"></span>Table 1.6: Table 6. Performance
+<span id="tab:rsults-alt-models"></span>Table 1.7: Table 7. Performance
 metrics of alternative models trained using the same sample of 134
 flakes
 
@@ -1306,7 +1572,7 @@ flakes
 
 In order to increase the applicability of machine learning models, the
 first version (v.1.0.0) of the original scraper mass calculator (OSMC)
-has been developed (Figure 9). This app integrates the above described
+has been developed (Figure 11). This app integrates the above described
 random forest model into a user-friendly interface, allowing one to
 quickly estimate original scraper mass using the same set of variables.
 This app is published as a free open source Shiny app, allowing for its
@@ -1316,17 +1582,19 @@ unrestricted use by the archaeological community.
 
 <figure>
 <img src="External-images/osmc-interface.jpg"
-alt="Figure 9. Screenshots of the Original Scraper Mass Calculator interface. Top: example of batch processing from a CSV file with a table of introduced data and its predictions. Bottom: individual introduction of data to calculate a scraper original mass." />
-<figcaption aria-hidden="true">Figure 9. Screenshots of the Original
+alt="Figure 11. Screenshots of the Original Scraper Mass Calculator interface. Top: example of batch processing from a CSV file with a table of introduced data and its predictions. Bottom: individual introduction of data to calculate a scraper original mass." />
+<figcaption aria-hidden="true">Figure 11. Screenshots of the Original
 Scraper Mass Calculator interface. Top: example of batch processing from
 a CSV file with a table of introduced data and its predictions. Bottom:
 individual introduction of data to calculate a scraper original
 mass.</figcaption>
 </figure>
 
+ 
+
 The current version of the OSMC allows the user to individually make
-estimations of original scraper mass or to process large amounts of
-data. Individual estimations can be done by manually entering data of
+estimations of original scraper mass or to batch process large amounts
+of data. Individual estimations can be done by manually entering data of
 each scraper at their corresponding spots and pressing the “Calculate
 original mass” button. Processing of files with multiple entries
 requires uploading a CSV file containing the data and with correct names
@@ -1335,12 +1603,35 @@ been made available at the app to ease this process). Column names of
 the CSV file must be: Rem.Weight, Mean.t, Max.thick (log10
 transformation of this variable is done automatically by the app), and
 GIUR. Both options return an estimation of the original scraper mass and
-what percentage has been lost through retouch.  
+what percentage has been lost through retouch. The OSMC has three levels
+of versioning numbering and it is published under v.1.0.0.
+
+-   v.0.0.1 corresponds to minor changes such as correction of parsing
+    errors or minor changes in user interface.
+
+-   v.0.1.0 corresponds to medium changes, contemplating non-critical
+    expansions of the existing data set (eg: expansion of the data set
+    to improve the training set data distribution), incorporation of new
+    raw materials, adding of visualizations, inclusion of additional
+    reports (eg: indicator of quality of predictions). The overall
+    performance metrics are not affected by these changes.
+
+-   v.1.0.0 corresponds to major changes, contemplating the
+    implmentation of new models for predictions, critical expansions of
+    the data set, deep modification of the user interface, incorporating
+    new tool-types on which to make predictions (such as double
+    scrapers, scrapers with ventral retouch, cores, etc.), modification
+    (or giving the user the option to select) predictive variables.
+
+ 
+
 The app is available at:
 
 <https://guillermo-bustos-perez.shinyapps.io/Original-Scraper-Mass-Calculator/>
 
-  \## **4. Discussion.**
+ 
+
+## 1.5 **4. Discussion.**
 
 The present study was aimed at predicting original scraper mass and from
 this the percentage of mass lost due to retouch (curation of an
@@ -1367,17 +1658,51 @@ resulting model has been integrated into the first version of the
 “Original scraper mass calculator” in a user-friendly app, which allows
 random forest estimations from user data. Data can be batch processed
 using CSV files (columns should have same name as the ones from the
-model) or manually introduced.
+model) or manually introduced. When the same random forest was trained
+using 134 random episodes per single flake and used to predict on the
+remaining resharpening episodes, the variance explained remained
+similar, and measures of error dispersion (RMSE, MAE and MAPE) did not
+increase drastically (it can be considered that the lower performance is
+a result of providing the model with less information). These results
+seem to indicate that the random forest is being able to adequately
+model the general patterns of flake reduction through retouch.
+
+When the residuals from the complete model and an a model trained on the
+first two PC were compared, no statistical difference was found in their
+distribution, which can be considered as indicative of of an absence of
+overfit due to collinearity between predictors. However, results from
+training random forests without average height of retouch and GIUR
+resulted in similar performance metrics, indicating that the absence of
+one of these variables does not harm the overall performance of the
+model. For the final model of the OSMC all four variables have been
+kept. The following arguments have been considered when maintaining the
+four variables: first, the present model is already very simple, with
+only four predictive variables. While some collinearity is indicated by
+VIF (mostly structural collinearity resulting from calculating new
+variables from original predictors which will also be present in unseen
+data), it must be acknowledge that each of these variables are at
+different scales and act as proxies of different features. Average
+height of retouch presents values ranging from 0 to infinite, while GIUR
+ranges from 0 to 1. Average height of retouch works as a proxy of volume
+lost by retouch, while GIUR serves as a proxy of edge consumed by
+retouch. Thus, a strong argument can be made in order to remove one of
+both variables, or retain both (a common problem referred as feature
+selection). Second, distribution of residuals from the PCA did not
+differ from those of the complete model. Finally, the final model uses a
+random forest, which have been shown to be highly resistant to
+collinearity between predictors \[[59](#ref-lantz_machine_2019)\].
+
+ 
 
 Scrapers with direct retouch on a continuous edge are some of the most
 common lithic implements present from the first Oldowan stone tools
-\[[1](#ref-barsky_early_2011)–[3](#ref-semaw_26-million-year-old_2003),[81](#ref-semaw_oldest_2006)\]
+\[[1](#ref-barsky_early_2011)–[3](#ref-semaw_26-million-year-old_2003),[89](#ref-semaw_oldest_2006)\]
 through to modern ethnographic examples
 \[[4](#ref-casamiquela_temas_1978)–[7](#ref-sillitoe_living_2003)\]. It
 is commonly considered that the amount of retouch that they receive is
 integral for understanding aspects of morphological variability and the
 organization of lithic technology by past societies
-\[[9](#ref-dibble_interpretation_1987),[18](#ref-kuhn_unpacking_1991),[19](#ref-shott_costs_2018),[82](#ref-barton_formation_2014),[83](#ref-roth_production_1998)\].
+\[[9](#ref-dibble_interpretation_1987),[18](#ref-kuhn_unpacking_1991),[19](#ref-shott_costs_2018),[90](#ref-barton_formation_2014),[91](#ref-roth_production_1998)\].
 Thus, being able to correctly estimate the amount and percentage of mass
 lost by retouch is fundamental for understanding these aspects of past
 human groups.
@@ -1442,8 +1767,48 @@ make predictions. As a result of this, they handle collinearity better,
 with more stable predictions that can be generalized to new data,
 although the interpretation of variable importance might be hindered.
 
+Weibull curves are a common approach when analyzing distribution of
+reduction among lithic assemblages
+\[[52](#ref-morales_distribution_2016),[68](#ref-shott_weibull_2002),[69](#ref-shott_modeling_2004),[71](#ref-shott_curation_2015)\].
+The reliability of inferred Weibull estimates and survival curve shape
+will depend on three main factors. First, the ability of an index to
+accurately estimate reduction. This can be evaluated and compared
+through common model accuracy metrics (MAE, RMSE and MAPE). Second, that
+the accuracy of these estimates remains constant along the reduction
+process (accuracy of predictions will not change between a lightly and
+heavily consumed scraper). Third, that the accuracy of predictions is
+not affected by different ratios of use life and different values of
+original mass. Depending on size and shape, some flakes will undergo
+more resharpening episodes, allowing for high curation values along with
+high values of mass removed. An index might provide accurate estimates
+for flakes with high curation values reached after few retouch episodes
+(for example small backed flakes), but might struggle with initially big
+flakes which have undergone multiple episodes of retouch and reached
+high curation ratios. As a result of these three factors, the
+reliability of Weibull curves can be affected by how different indexes
+react to different scenarios of stone tool curation and original size.
+For example, an index which accurately estimates reduction among
+originally small flakes independent of their curation ratio will provide
+a reliable Weibull curve. However, the same index might struggle with
+originally bigger flakes which have undergone more retouch episodes and
+have higher curation ratios, thus resulting in unreliable Weibull
+curves. In the present study estimates for the Weibull distribution of
+observed and predicted curation ratios varied very slightly, with the
+same Type III of survival curves which only presented differences at the
+start (higher survival probability) and at the end (survival of actual
+values was slightly longer). This seems to indicate that, for the
+present experimental sample, the Weibull estimates and survival curves
+are reliable. However, the present research has made available the
+experimental dataset of all 134 flakes along with their original
+dimensions, resharpening episodes and common metrics used to develop
+reduction indices. This can help simulated different scenarios of stone
+tool curation and discard, and evaluate the reliability of different
+indexes when constructing Weibull curves.
+
+ 
+
 A series of ideal qualities have been proposed for reduction indexes
-\[[60](#ref-hiscock_generalization_2010)\]. The random forest model
+\[[62](#ref-hiscock_generalization_2010)\]. The random forest model
 presented here complies with the qualities of inferential power,
 directionality, comprehensiveness, sensitivity, and scale-independence.
 The model presents an extremely large/strong inferential power (\>0.8)
@@ -1526,6 +1891,22 @@ remaining scraper mass. Further research expanding the experimental
 sample might help to systematically account for the effect of different
 termination types.
 
+ 
+
+Parametric tests indicated a non-normal distribution of residuals from
+predicting original mass and curation ratio. Visual evaluation (Figure
+7) of residuals when predicting flake mass according to predicted flake
+mass, indicate that the higher the predicted mass value, the residuals
+will become more disperse. However, this dispersion did not translate to
+the residuals of curation according to predicted flake mass. An
+underlying cause for the better distribution of curation residuals can
+is that the same error in estimating mass affects differently the
+estimation of curation on a small or big flake. An error of 3 g will
+translate into a much higher curation error for a flake with an original
+mass of 25 g, than a flake with an original mass of 80 g.
+
+ 
+
 The current research tested four different machine learning algorithms
 (multiple linear regression, SVM regression, random forest and GBM).
 Random forest was the best performing algorithm although lightly
@@ -1539,17 +1920,25 @@ training ANN for predicting original scraper mass, helping to overcome
 the bias observed in lightly and extremely retouched artifacts. Other
 research focusing in core reduction intensity have predicted curation
 ratio through a logistic error distribution model
-\[[84](#ref-douglass_core_2018)\], which avoids obtaining negative
+\[[50](#ref-douglass_core_2018)\], which avoids obtaining negative
 percentages of reduction intensity (predicted mass has a lower value
 than remaining mass). This would offer the possibility of predicting
 mass from curation, instead of curation from mass, although comparing
 accuracy metrics between both methods is required. The “Original Scraper
-Mass Calculator” has a versioning number of v.1.0.0. The replacement of
-the random forest model for a more accurate one (or the approach of
-estimating curation ration through the prediction of flake mass) is
-contemplated as a major change. This allows for flexibility when
-updating the Original Scraper Mass Calculator, allowing to further
-increase the accuracy of predictions.
+Mass Calculator” has an initial versioning number of v.1.0.0. Three
+levels of versioning number have been implemented. The underlying idea
+of the versioning number is the dynamic conception of the developed
+application. This dynamic conception can help to remedy possible
+deficiencies through the expansion of the current dataset. Furthermore,
+it also allows to expand the dataset in order to incorporate new raw
+materials, tool types, or even by training new models that will help
+improve the quality of predictions (for example replacing the random
+forest model for a more accurate model, or changing the approach of
+estimating curation ratiois contemplated as a major change). This
+dynamic approach allows for flexibility when updating the Original
+Scraper Mass Calculator.
+
+ 
 
 The v.1.0.0 of the “Original Scraper Mass Calculator” does not provide
 indications of how reliable predictions are. Very lightly retouched
@@ -1568,48 +1957,18 @@ interaction of the GIUR and maximum thickness (allowing it to detect
 big/thick flakes which have undergone multiple episodes of
 resharpening).
 
-Weibull curves are a common approach when analyzing distribution of
-reduction among lithic assemblages
-\[[50](#ref-morales_distribution_2016),[85](#ref-shott_weibull_2002)–[87](#ref-shott_curation_2015)\].
-The reliability of inferred Weibull curves shape will depend on three
-main factors. First, the ability of an index to accurately estimate
-reduction. This can be evaluated and compared through common model
-accuracy metrics (MAE, RMSE and MAPE). Second, that the accuracy of
-these estimates remains constant along the reduction process (accuracy
-of predictions will not change between a lightly and heavily consumed
-scraper). Third, that the accuracy of predictions is not affected by
-different ratios of use life and different values of original mass.
-Depending on size and shape, some flakes will undergo more resharpening
-episodes, allowing for high curation values along with high values of
-mass removed. An index might provide accurate estimates for flakes with
-high curation values reached after few retouch episodes (for example
-small backed flakes), but might struggle with initially big flakes which
-have undergone multiple episodes of retouch and reached high curation
-ratios. As a result of these three factors, the reliability of Weibull
-curves can be affected by how different indexes react to different
-scenarios of stone tool curation and original size. For example, an
-index which accurately estimates reduction among originally small flakes
-independent of their curation ratio will provide a reliable Weibull
-curve. However, the same index might struggle with originally bigger
-flakes which have undergone more retouch episodes and have higher
-curation ratios, thus resulting in unreliable Weibull curves. The
-present research has made available the experimental dataset of all 134
-flakes along with their original dimensions, resharpening episodes and
-common metrics used to develop reduction indices. This can help
-simulated different scenarios of stone tool curation and discard, and
-evaluate the reliability of different indexes when constructing Weibull
-curves.
+ 
 
 Accurate inferences of mass lost by individual scrapers can be combined
 with multiple lithic analysis. Original scraper mass and the curation
 ratio can be combined with geometric morphometrics to determine how
 scraper shape changes through reduction (allometry) at a single (or
 multiple) sites, or at a diachronic level
-\[[8](#ref-dibble_middle_1995),[17](#ref-andrefsky_construction_2008),[50](#ref-morales_distribution_2016),[88](#ref-brumm_scraper_2011)–[92](#ref-morales_evolution_2015)\].
+\[[8](#ref-dibble_middle_1995),[17](#ref-andrefsky_construction_2008),[52](#ref-morales_distribution_2016),[92](#ref-brumm_scraper_2011)–[96](#ref-morales_evolution_2015)\].
 Distance to raw material sources seems to have played an underlying
 factor of resharpening intensity among scrapers, with scrapers coming
 from longer distances having been resharpened more intensively
-\[[15](#ref-clarkson_holocene_2002),[16](#ref-glauberman_late_2020),[93](#ref-byrne_dynamics_1980)–[95](#ref-kuhn_planning_1992)\].
+\[[15](#ref-clarkson_holocene_2002),[16](#ref-glauberman_late_2020),[97](#ref-byrne_dynamics_1980)–[99](#ref-kuhn_planning_1992)\].
 However, concerns about accuracy of indexes employed for these
 estimations have been raised
 \[[29](#ref-eren_defining_2005),[32](#ref-morales_measuring_2015)\].
@@ -1617,10 +1976,10 @@ Application of the proposed method can help better model the influence
 of raw material distance on resharpening intensity. Association between
 resharpening intensity, tool shape and use remain partially unexplored.
 Some studies have pointed to a lack of relationship between specific
-tool form and function \[[96](#ref-borel_stone_2017)\], while other
+tool form and function \[[100](#ref-borel_stone_2017)\], while other
 studies point at potential higher functional versatility for tools
 coming from longer distances and higher curation ratios
-\[[97](#ref-agam_interpreting_2020)\]. Finally, the application of the
+\[[101](#ref-agam_interpreting_2020)\]. Finally, the application of the
 proposed method can help to better model two additional aspect of lithic
 technological organization: changes in preferred blanks for resharpening
 and changes in tool gear transport. Changes in preferred initial blanks
@@ -1631,14 +1990,16 @@ European Middle Paleolithic. Different lithic technocomplexes,
 characterized by different predominant knapping methods, show
 differences in the selection of initial blanks which underwent more
 intense resharpening
-\[[28](#ref-bustos-perez_exploring_2019),[98](#ref-roth_production_1998-1),[99](#ref-faivre_late_2017)\].
+\[[28](#ref-bustos-perez_exploring_2019),[102](#ref-roth_production_1998-1),[103](#ref-faivre_late_2017)\].
 Additionally, strategies of tool transport also experienced changes
 within technocomplexes, alternating between the transport and
 resharpening of tools and transport of cores for immediate flake
 production
-\[[18](#ref-kuhn_unpacking_1991),[100](#ref-porraz_middle_2009)\].  
+\[[18](#ref-kuhn_unpacking_1991),[104](#ref-porraz_middle_2009)\].
 
-## 1.5 **5. Conclusions.**
+ 
+
+## 1.6 **5. Conclusions.**
 
 Predicting original scraper mass and amount of mass lost by retouch has
 long been a major goal in lithic analysis. An experimental sample of 134
@@ -1650,9 +2011,11 @@ has resulted in the most accurate model to date. This higher accuracy
 allows for an estimation of retouch intensity at the individual scraper
 level. This model has been integrated into a user-friendly app in order
 to allow for its widespread application among the archaeological
-community.  
+community.
 
-## 1.6 **6. Acknowledgments.**
+ 
+
+## 1.7 **6. Acknowledgments.**
 
 Guillermo Bustos-Pérez is postdoctoral researcher at the Department of
 Human Origins (Max Planck Institute for Evolutionary Anthropology).
@@ -1665,7 +2028,7 @@ suggestions for its improvement. We would like to thank both reviewers
 made important suggestions to improve and clarify the manuscript.  
  
 
-## 1.7 **7. References**
+## 1.8 **7. References**
 
 <span class="csl-left-margin">1.
 </span><span class="csl-right-inline">Barsky D, Chapon-Sao C, Bahain
@@ -1973,232 +2336,259 @@ materials. Archaeological and Anthropological Sciences. 2020;12: 44.
 doi:[10.1007/s12520-019-00963-9](https://doi.org/10.1007/s12520-019-00963-9)</span>
 
 <span class="csl-left-margin">50.
-</span><span class="csl-right-inline">Morales JI. Distribution patterns
-of stone-tool reduction: Establishing frames of reference to approximate
-occupational features and formation processes in Paleolithic societies.
-Journal of Anthropological Archaeology. 2016;41: 231–245.
-doi:[10.1016/j.jaa.2016.01.004](https://doi.org/10.1016/j.jaa.2016.01.004)</span>
-
-<span class="csl-left-margin">51.
-</span><span class="csl-right-inline">Hiscock P, Clarkson C. The reality
-of reduction experiments and the GIUR: Reply to Eren and Sampson.
-Journal of Archaeological Science. 2009;36: 1576–1581.
-doi:[10.1016/j.jas.2009.03.019](https://doi.org/10.1016/j.jas.2009.03.019)</span>
-
-<span class="csl-left-margin">52.
-</span><span class="csl-right-inline">Hiscock P, Clarkson C.
-Experimental evaluation of Kuhn’s geometric index of reduction and the
-flat-flake problem. Journal of Archaeological Science. 2005;32:
-1015–1022.
-doi:[10.1016/j.jas.2005.02.002](https://doi.org/10.1016/j.jas.2005.02.002)</span>
-
-<span class="csl-left-margin">53.
-</span><span class="csl-right-inline">James G, Witten D, Hastie T,
-Tibshirani R. An Introduction to Statistical Learning with Applications
-in R. Second Edition. New York: springer; 2013. Available:
-<https://doi.org/10.1007/978-1-0716-1418-1></span>
-
-<span class="csl-left-margin">54.
-</span><span class="csl-right-inline">Awad M, Khanna R. Support Vector
-Regression. In: Awad M, Khanna R, editors. Efficient Learning Machines:
-Theories, Concepts, and Applications for Engineers and System Designers.
-Berkeley, CA: Apress; 2015. pp. 67–80.
-doi:[10.1007/978-1-4302-5990-9_4](https://doi.org/10.1007/978-1-4302-5990-9_4)</span>
-
-<span class="csl-left-margin">55.
-</span><span class="csl-right-inline">Cortes C, Vapnik V. Support-vector
-networks. Machine learning. 1995;20: 273–297. </span>
-
-<span class="csl-left-margin">56.
-</span><span class="csl-right-inline">Breiman L. Random Forests. Machine
-Learning. 2001;45: 5–32.
-doi:[10.1023/A:1010933404324](https://doi.org/10.1023/A:1010933404324)</span>
-
-<span class="csl-left-margin">57.
-</span><span class="csl-right-inline">Lantz B. Machine learning with R:
-Expert techniques for predictive modeling. Birmingham: Packt publishing
-ltd; 2019. </span>
-
-<span class="csl-left-margin">58.
-</span><span class="csl-right-inline">Friedman JH. Stochastic gradient
-boosting. Computational Statistics & Data Analysis. 2002;38: 367–378.
-doi:[10.1016/S0167-9473(01)00065-2](https://doi.org/10.1016/S0167-9473(01)00065-2)</span>
-
-<span class="csl-left-margin">59.
-</span><span class="csl-right-inline">Friedman JH. Greedy function
-approximation: A gradient boosting machine. Annals of statistics.
-2001;29: 1189–1232. Available:
-<https://www.jstor.org/stable/2699986></span>
-
-<span class="csl-left-margin">60.
-</span><span class="csl-right-inline">Hiscock P, Tabrett A.
-Generalization, inference and the quantification of lithic reduction.
-World Archaeology. 2010;42: 545–561.
-doi:[10.1080/00438243.2010.517669](https://doi.org/10.1080/00438243.2010.517669)</span>
-
-<span class="csl-left-margin">61.
-</span><span class="csl-right-inline">Anscombe FJ. Graphs in Statistical
-Analysis. The American Statistician. 1973;27: 17.
-doi:[10.2307/2682899](https://doi.org/10.2307/2682899)</span>
-
-<span class="csl-left-margin">62.
-</span><span class="csl-right-inline">Fox J, Weisberg S. An R companion
-to applied regression. Third. Thousand Oaks: Sage publications; 2018.
-</span>
-
-<span class="csl-left-margin">63.
-</span><span class="csl-right-inline">Marquardt DW. Generalized
-Inverses, Ridge Regression, Biased Linear Estimation, and Nonlinear
-Estimation. Technometrics. 1970;12: 591–612. </span>
-
-<span class="csl-left-margin">64.
-</span><span class="csl-right-inline">O’brien RM. A Caution Regarding
-Rules of Thumb for Variance Inflation Factors. Quality & Quantity.
-2007;41: 673–690.
-doi:[10.1007/s11135-006-9018-6](https://doi.org/10.1007/s11135-006-9018-6)</span>
-
-<span class="csl-left-margin">65.
-</span><span class="csl-right-inline">Naes T, Mevik B-H. Understanding
-the collinearity problem in regression and discriminant analysis.
-Journal of Chemometrics. 2001;15: 413–426.
-doi:[10.1002/cem.676](https://doi.org/10.1002/cem.676)</span>
-
-<span class="csl-left-margin">66.
-</span><span class="csl-right-inline">Team Rs. RStudio: Integrated
-Development for R. Boston, MA: RStudio, Inc.; 2019. Available:
-<http://www.rstudio.com/></span>
-
-<span class="csl-left-margin">67.
-</span><span class="csl-right-inline">Team RC. R: A language and
-environment for statistical computing. Vienna, Austria: R Foundation for
-Statistical Computing; 2019. Available:
-<https://www.R-project.org/></span>
-
-<span class="csl-left-margin">68.
-</span><span class="csl-right-inline">Wickham H, Averick M, Bryan J,
-Chang W, McGowan L, François R, et al. Welcome to the Tidyverse. Journal
-of Open Source Software. 2019;4: 1686.
-doi:[10.21105/joss.01686](https://doi.org/10.21105/joss.01686)</span>
-
-<span class="csl-left-margin">69.
-</span><span class="csl-right-inline">Venables WN, Ripley BD. Modern
-applied statistics with S. Fourth Edition. New York: Springer; 2002.
-Available: <https://www.stats.ox.ac.uk/pub/MASS4/></span>
-
-<span class="csl-left-margin">70.
-</span><span class="csl-right-inline">Karatzoglou A, Smola A, Hornik K,
-Zeileis A. Kernlab - An S4 Package for Kernel Methods in R. Journal of
-Statistical Software. 2004;11: 1–20.
-doi:[10.18637/jss.v011.i09](https://doi.org/10.18637/jss.v011.i09)</span>
-
-<span class="csl-left-margin">71.
-</span><span class="csl-right-inline">Wright MN, Ziegler A. Ranger: A
-fast implementation of random forests for high dimensional data in C++
-and R. arXiv preprint arXiv:150804409. 2015. </span>
-
-<span class="csl-left-margin">72.
-</span><span class="csl-right-inline">Ridgeway G. Generalized Boosted
-Models: A guide to the gbm package. R package vignette. 2007; 2007.
-Available: <http://CRAN.R-project.org/package=gbm></span>
-
-<span class="csl-left-margin">73.
-</span><span class="csl-right-inline">Kuhn M. Building Predictive Models
-in R using the caret Package. Journal of Statistical Software. 2008;28:
-1–26.
-doi:[10.18637/jss.v028.i05](https://doi.org/10.18637/jss.v028.i05)</span>
-
-<span class="csl-left-margin">74.
-</span><span class="csl-right-inline">Chang W, Cheng J, Allaire J, Xie
-Y, McPherson J. Package “shiny.” 2015 \[cited 1 Oct 2024\]. Available:
-<https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=b7600ac8de6a97df1bd26dcbfc43ef9fc3c8be61></span>
-
-<span class="csl-left-margin">75.
-</span><span class="csl-right-inline">Kasprzak P, Mitchell L, Kravchuk
-O, Timmins A. Six Years of Shiny in Research-Collaborative Development
-of Web Tools in R. R Journal. 2020;12: 20–42.
-doi:[10.32614/rj-2021-004](https://doi.org/10.32614/rj-2021-004)</span>
-
-<span class="csl-left-margin">76.
-</span><span class="csl-right-inline">Wickham H. Mastering shiny. "
-O’Reilly Media, Inc."; 2021. </span>
-
-<span class="csl-left-margin">77.
-</span><span class="csl-right-inline">Marwick B, Boettiger C, Mullen L.
-Packaging Data Analytical Work Reproducibly Using R (and Friends). The
-American Statistician. 2018;72: 80–88.
-doi:[10.1080/00031305.2017.1375986](https://doi.org/10.1080/00031305.2017.1375986)</span>
-
-<span class="csl-left-margin">78.
-</span><span class="csl-right-inline">McNamara A. Dynamic Documents with
-R and knitr. Journal of Statistical Software. 2014;56: 1–4. Available:
-<https://www.jstatsoft.org/index.php/jss/article/view/v056b02/731></span>
-
-<span class="csl-left-margin">79.
-</span><span class="csl-right-inline">Xie Y. Knitr: A Comprehensive Tool
-for Reproducible Research in R. Implementing Reproducible Research.
-Chapman; Hall/CRC; 2014. </span>
-
-<span class="csl-left-margin">80.
-</span><span class="csl-right-inline">Xie Y. Bookdown: Authoring books
-and technical documents with R markdown. Taylor & Francis Ltd; 2016.
-</span>
-
-<span class="csl-left-margin">81.
-</span><span class="csl-right-inline">Semaw S. The oldest stone
-artifacts from Gona (2.6-2.5 ma), Afar, Ethiopia: Implications for
-understanding the earliest stages of stone knapping. In: Schick K, Toth
-N, editors. The Oldowan: Case Studies Into the Earliest Stone Age. Stone
-Age Institute Press; 2006. pp. 43–75. </span>
-
-<span class="csl-left-margin">82.
-</span><span class="csl-right-inline">Barton CM, Riel-Salvatore J. The
-formation of lithic assemblages. Journal of Archaeological Science.
-2014;46: 334–352.
-doi:[10.1016/j.jas.2014.03.031](https://doi.org/10.1016/j.jas.2014.03.031)</span>
-
-<span class="csl-left-margin">83.
-</span><span class="csl-right-inline">Roth BJ, Dibble HL. Production and
-Transport of Blanks and Tools at the French Middle Paleolithic Site of
-Combe-Capelle Bas. American Antiquity. 1998;63: 47–62. </span>
-
-<span class="csl-left-margin">84.
 </span><span class="csl-right-inline">Douglass MJ, Lin SC, Braun DR,
 Plummer TW. Core Use-Life Distributions in Lithic Assemblages as a Means
 for Reconstructing Behavioral Patterns. Journal of Archaeological Method
 and Theory. 2018;25: 254–288.
 doi:[10.1007/s10816-017-9334-2](https://doi.org/10.1007/s10816-017-9334-2)</span>
 
-<span class="csl-left-margin">85.
+<span class="csl-left-margin">51.
+</span><span class="csl-right-inline">Lombao D, Rabuñal JR,
+Cueva-Temprana A, Mosquera M, Morales JI. Establishing a new workflow in
+the study of core reduction intensity and distribution. Journal of
+Lithic Studies. 2023;10: 25 p.–25 p.
+doi:[10.2218/jls.7257](https://doi.org/10.2218/jls.7257)</span>
+
+<span class="csl-left-margin">52.
+</span><span class="csl-right-inline">Morales JI. Distribution patterns
+of stone-tool reduction: Establishing frames of reference to approximate
+occupational features and formation processes in Paleolithic societies.
+Journal of Anthropological Archaeology. 2016;41: 231–245.
+doi:[10.1016/j.jaa.2016.01.004](https://doi.org/10.1016/j.jaa.2016.01.004)</span>
+
+<span class="csl-left-margin">53.
+</span><span class="csl-right-inline">Hiscock P, Clarkson C. The reality
+of reduction experiments and the GIUR: Reply to Eren and Sampson.
+Journal of Archaeological Science. 2009;36: 1576–1581.
+doi:[10.1016/j.jas.2009.03.019](https://doi.org/10.1016/j.jas.2009.03.019)</span>
+
+<span class="csl-left-margin">54.
+</span><span class="csl-right-inline">Hiscock P, Clarkson C.
+Experimental evaluation of Kuhn’s geometric index of reduction and the
+flat-flake problem. Journal of Archaeological Science. 2005;32:
+1015–1022.
+doi:[10.1016/j.jas.2005.02.002](https://doi.org/10.1016/j.jas.2005.02.002)</span>
+
+<span class="csl-left-margin">55.
+</span><span class="csl-right-inline">James G, Witten D, Hastie T,
+Tibshirani R. An Introduction to Statistical Learning with Applications
+in R. Second Edition. New York: springer; 2013. Available:
+<https://doi.org/10.1007/978-1-0716-1418-1></span>
+
+<span class="csl-left-margin">56.
+</span><span class="csl-right-inline">Awad M, Khanna R. Support Vector
+Regression. In: Awad M, Khanna R, editors. Efficient Learning Machines:
+Theories, Concepts, and Applications for Engineers and System Designers.
+Berkeley, CA: Apress; 2015. pp. 67–80.
+doi:[10.1007/978-1-4302-5990-9_4](https://doi.org/10.1007/978-1-4302-5990-9_4)</span>
+
+<span class="csl-left-margin">57.
+</span><span class="csl-right-inline">Cortes C, Vapnik V. Support-vector
+networks. Machine learning. 1995;20: 273–297. </span>
+
+<span class="csl-left-margin">58.
+</span><span class="csl-right-inline">Breiman L. Random Forests. Machine
+Learning. 2001;45: 5–32.
+doi:[10.1023/A:1010933404324](https://doi.org/10.1023/A:1010933404324)</span>
+
+<span class="csl-left-margin">59.
+</span><span class="csl-right-inline">Lantz B. Machine learning with R:
+Expert techniques for predictive modeling. Birmingham: Packt publishing
+ltd; 2019. </span>
+
+<span class="csl-left-margin">60.
+</span><span class="csl-right-inline">Friedman JH. Stochastic gradient
+boosting. Computational Statistics & Data Analysis. 2002;38: 367–378.
+doi:[10.1016/S0167-9473(01)00065-2](https://doi.org/10.1016/S0167-9473(01)00065-2)</span>
+
+<span class="csl-left-margin">61.
+</span><span class="csl-right-inline">Friedman JH. Greedy function
+approximation: A gradient boosting machine. Annals of statistics.
+2001;29: 1189–1232. Available:
+<https://www.jstor.org/stable/2699986></span>
+
+<span class="csl-left-margin">62.
+</span><span class="csl-right-inline">Hiscock P, Tabrett A.
+Generalization, inference and the quantification of lithic reduction.
+World Archaeology. 2010;42: 545–561.
+doi:[10.1080/00438243.2010.517669](https://doi.org/10.1080/00438243.2010.517669)</span>
+
+<span class="csl-left-margin">63.
+</span><span class="csl-right-inline">Anscombe FJ. Graphs in Statistical
+Analysis. The American Statistician. 1973;27: 17.
+doi:[10.2307/2682899](https://doi.org/10.2307/2682899)</span>
+
+<span class="csl-left-margin">64.
+</span><span class="csl-right-inline">Fox J, Weisberg S. An R companion
+to applied regression. Third. Thousand Oaks: Sage publications; 2018.
+</span>
+
+<span class="csl-left-margin">65.
+</span><span class="csl-right-inline">Marquardt DW. Generalized
+Inverses, Ridge Regression, Biased Linear Estimation, and Nonlinear
+Estimation. Technometrics. 1970;12: 591–612. </span>
+
+<span class="csl-left-margin">66.
+</span><span class="csl-right-inline">O’brien RM. A Caution Regarding
+Rules of Thumb for Variance Inflation Factors. Quality & Quantity.
+2007;41: 673–690.
+doi:[10.1007/s11135-006-9018-6](https://doi.org/10.1007/s11135-006-9018-6)</span>
+
+<span class="csl-left-margin">67.
+</span><span class="csl-right-inline">Naes T, Mevik B-H. Understanding
+the collinearity problem in regression and discriminant analysis.
+Journal of Chemometrics. 2001;15: 413–426.
+doi:[10.1002/cem.676](https://doi.org/10.1002/cem.676)</span>
+
+<span class="csl-left-margin">68.
 </span><span class="csl-right-inline">Shott MJ. Weibull Estimation on
 Use Life Distribution in Experimental Spear-Point Data. Lithic
 Technology. 2002;27: 93–109.
 doi:[10.1080/01977261.2002.11720993](https://doi.org/10.1080/01977261.2002.11720993)</span>
 
-<span class="csl-left-margin">86.
+<span class="csl-left-margin">69.
 </span><span class="csl-right-inline">Shott MJ, Sillitoe P. Modeling
 Use-Life Distributions in Archaeology Using New Guinea Wola Ethnographic
 Data. American Antiquity. 2004;69: 339–355.
 doi:[10.2307/4128424](https://doi.org/10.2307/4128424)</span>
 
-<span class="csl-left-margin">87.
+<span class="csl-left-margin">70.
+</span><span class="csl-right-inline">Shott MJ. Stone-Tool Demography:
+Reduction Distributions in North American Paleoindian Tools. In: Lycett
+S, Chauhan P, editors. New Perspectives on Old Stones: Analytical
+Approaches to Paleolithic Technologies. New York, NY: Springer; 2010.
+pp. 275–293.
+doi:[10.1007/978-1-4419-6861-6_12](https://doi.org/10.1007/978-1-4419-6861-6_12)</span>
+
+<span class="csl-left-margin">71.
 </span><span class="csl-right-inline">Shott MJ, Seeman MF. Curation and
 recycling: Estimating Paleoindian endscraper curation rates at Nobles
 Pond, Ohio, USA. Quaternary International. 2015;361: 319–331.
 doi:[10.1016/j.quaint.2014.06.023](https://doi.org/10.1016/j.quaint.2014.06.023)</span>
 
+<span class="csl-left-margin">72.
+</span><span class="csl-right-inline">Team Rs. RStudio: Integrated
+Development for R. Boston, MA: RStudio, Inc.; 2019. Available:
+<http://www.rstudio.com/></span>
+
+<span class="csl-left-margin">73.
+</span><span class="csl-right-inline">Team RC. R: A language and
+environment for statistical computing. Vienna, Austria: R Foundation for
+Statistical Computing; 2019. Available:
+<https://www.R-project.org/></span>
+
+<span class="csl-left-margin">74.
+</span><span class="csl-right-inline">Wickham H, Averick M, Bryan J,
+Chang W, McGowan L, François R, et al. Welcome to the Tidyverse. Journal
+of Open Source Software. 2019;4: 1686.
+doi:[10.21105/joss.01686](https://doi.org/10.21105/joss.01686)</span>
+
+<span class="csl-left-margin">75.
+</span><span class="csl-right-inline">Venables WN, Ripley BD. Modern
+applied statistics with S. Fourth Edition. New York: Springer; 2002.
+Available: <https://www.stats.ox.ac.uk/pub/MASS4/></span>
+
+<span class="csl-left-margin">76.
+</span><span class="csl-right-inline">Karatzoglou A, Smola A, Hornik K,
+Zeileis A. Kernlab - An S4 Package for Kernel Methods in R. Journal of
+Statistical Software. 2004;11: 1–20.
+doi:[10.18637/jss.v011.i09](https://doi.org/10.18637/jss.v011.i09)</span>
+
+<span class="csl-left-margin">77.
+</span><span class="csl-right-inline">Wright MN, Ziegler A. Ranger: A
+fast implementation of random forests for high dimensional data in C++
+and R. arXiv preprint arXiv:150804409. 2015. </span>
+
+<span class="csl-left-margin">78.
+</span><span class="csl-right-inline">Ridgeway G. Generalized Boosted
+Models: A guide to the gbm package. R package vignette. 2007; 2007.
+Available: <http://CRAN.R-project.org/package=gbm></span>
+
+<span class="csl-left-margin">79.
+</span><span class="csl-right-inline">Kuhn M. Building Predictive Models
+in R using the caret Package. Journal of Statistical Software. 2008;28:
+1–26.
+doi:[10.18637/jss.v028.i05](https://doi.org/10.18637/jss.v028.i05)</span>
+
+<span class="csl-left-margin">80.
+</span><span class="csl-right-inline">Therneau TM, 2009) TL(originalS
+port and R maintainer until, Elizabeth A, Cynthia C. Survival: Survival
+Analysis. 2024. Available:
+<https://cran.r-project.org/web/packages/survival/index.html></span>
+
+<span class="csl-left-margin">81.
+</span><span class="csl-right-inline">Kassambara A, Kosinski M, Biecek
+P, Fabian S. Survminer: Drawing Survival Curves using ’ggplot2’. 2024.
+Available:
+<https://cran.r-project.org/web/packages/survminer/index.html></span>
+
+<span class="csl-left-margin">82.
+</span><span class="csl-right-inline">Chang W, Cheng J, Allaire J, Xie
+Y, McPherson J. Package “shiny.” 2015 \[cited 1 Oct 2024\]. Available:
+<https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=b7600ac8de6a97df1bd26dcbfc43ef9fc3c8be61></span>
+
+<span class="csl-left-margin">83.
+</span><span class="csl-right-inline">Kasprzak P, Mitchell L, Kravchuk
+O, Timmins A. Six Years of Shiny in Research-Collaborative Development
+of Web Tools in R. R Journal. 2020;12: 20–42.
+doi:[10.32614/rj-2021-004](https://doi.org/10.32614/rj-2021-004)</span>
+
+<span class="csl-left-margin">84.
+</span><span class="csl-right-inline">Wickham H. Mastering shiny. "
+O’Reilly Media, Inc."; 2021. </span>
+
+<span class="csl-left-margin">85.
+</span><span class="csl-right-inline">Marwick B, Boettiger C, Mullen L.
+Packaging Data Analytical Work Reproducibly Using R (and Friends). The
+American Statistician. 2018;72: 80–88.
+doi:[10.1080/00031305.2017.1375986](https://doi.org/10.1080/00031305.2017.1375986)</span>
+
+<span class="csl-left-margin">86.
+</span><span class="csl-right-inline">McNamara A. Dynamic Documents with
+R and knitr. Journal of Statistical Software. 2014;56: 1–4. Available:
+<https://www.jstatsoft.org/index.php/jss/article/view/v056b02/731></span>
+
+<span class="csl-left-margin">87.
+</span><span class="csl-right-inline">Xie Y. Knitr: A Comprehensive Tool
+for Reproducible Research in R. Implementing Reproducible Research.
+Chapman; Hall/CRC; 2014. </span>
+
 <span class="csl-left-margin">88.
+</span><span class="csl-right-inline">Xie Y. Bookdown: Authoring books
+and technical documents with R markdown. Taylor & Francis Ltd; 2016.
+</span>
+
+<span class="csl-left-margin">89.
+</span><span class="csl-right-inline">Semaw S. The oldest stone
+artifacts from Gona (2.6-2.5 ma), Afar, Ethiopia: Implications for
+understanding the earliest stages of stone knapping. In: Schick K, Toth
+N, editors. The Oldowan: Case Studies Into the Earliest Stone Age. Stone
+Age Institute Press; 2006. pp. 43–75. </span>
+
+<span class="csl-left-margin">90.
+</span><span class="csl-right-inline">Barton CM, Riel-Salvatore J. The
+formation of lithic assemblages. Journal of Archaeological Science.
+2014;46: 334–352.
+doi:[10.1016/j.jas.2014.03.031](https://doi.org/10.1016/j.jas.2014.03.031)</span>
+
+<span class="csl-left-margin">91.
+</span><span class="csl-right-inline">Roth BJ, Dibble HL. Production and
+Transport of Blanks and Tools at the French Middle Paleolithic Site of
+Combe-Capelle Bas. American Antiquity. 1998;63: 47–62. </span>
+
+<span class="csl-left-margin">92.
 </span><span class="csl-right-inline">Brumm A, McLaren A. Scraper
 reduction and “imposed form” at the Lower Palaeolithic site of High
 Lodge, England. Journal of Human Evolution. 2011;60: 185–204.
 doi:[10.1016/j.jhevol.2010.09.005](https://doi.org/10.1016/j.jhevol.2010.09.005)</span>
 
-<span class="csl-left-margin">89.
+<span class="csl-left-margin">93.
 </span><span class="csl-right-inline">Hiscock P, Attenbrow V. Early
 Australian implement variation: A reduction model. Journal of
 Archaeological Science. 2003;30: 239–249.
 doi:[10.1006/jasc.2002.0830](https://doi.org/10.1006/jasc.2002.0830)</span>
 
-<span class="csl-left-margin">90.
+<span class="csl-left-margin">94.
 </span><span class="csl-right-inline">Ioviţă R. Comparing Stone Tool
 Resharpening Trajectories with the Aid of Elliptical Fourier Analysis.
 In: Lycett S, Chauhan P, editors. New Perspectives on Old Stones:
@@ -2206,66 +2596,66 @@ Analytical Approaches to Paleolithic Technologies. New York, NY:
 Springer; 2010. pp. 235–253.
 doi:[10.1007/978-1-4419-6861-6_10](https://doi.org/10.1007/978-1-4419-6861-6_10)</span>
 
-<span class="csl-left-margin">91.
+<span class="csl-left-margin">95.
 </span><span class="csl-right-inline">Knell EJ. Allometry of unifacial
 flake tools from Mojave Desert terminal pleistocene/early holocene
 sites: Implications for landscape knowledge, tool design, and land use.
 Journal of Archaeological Science: Reports. 2022;41: 103314.
 doi:[10.1016/j.jasrep.2021.103314](https://doi.org/10.1016/j.jasrep.2021.103314)</span>
 
-<span class="csl-left-margin">92.
+<span class="csl-left-margin">96.
 </span><span class="csl-right-inline">Morales JI, Soto M, Lorenzo C,
 Vergès JM. The evolution and stability of stone tools: The effects of
 different mobility scenarios in tool reduction and shape features.
 Journal of Archaeological Science: Reports. 2015;3: 295–305.
 doi:[10.1016/j.jasrep.2015.06.019](https://doi.org/10.1016/j.jasrep.2015.06.019)</span>
 
-<span class="csl-left-margin">93.
+<span class="csl-left-margin">97.
 </span><span class="csl-right-inline">Byrne D. Dynamics of Dispersion:
 The Place of Silcrete in Archaeological Assemblages from the Lower
 Murchison, Western Australia. Archaeology & Physical Anthropology in
 Oceania. 1980;15: 110–119. Available:
 <https://www.jstor.org/stable/40386377></span>
 
-<span class="csl-left-margin">94.
+<span class="csl-left-margin">98.
 </span><span class="csl-right-inline">Clarkson C. An Index of
 Invasiveness for the Measurement of Unifacial and Bifacial Retouch: A
 Theoretical, Experimental and Archaeological Verification. Journal of
 Archaeological Science. 2002;29: 65–75.
 doi:[10.1006/jasc.2001.0702](https://doi.org/10.1006/jasc.2001.0702)</span>
 
-<span class="csl-left-margin">95.
+<span class="csl-left-margin">99.
 </span><span class="csl-right-inline">Kuhn SL. On Planning and Curated
 Technologies in the Middle Paleolithic. Journal of Anthropological
 Research. 1992;48: 185–214. </span>
 
-<span class="csl-left-margin">96.
+<span class="csl-left-margin">100.
 </span><span class="csl-right-inline">Borel A, Cornette R, Baylac M.
 Stone Tool Forms and Functions: A Morphometric Analysis of Modern
 Humans’ Stone Tools From Song Terus Cave (Java, Indonesia): Stone tool
 forms and functions. Archaeometry. 2017;59: 455–471.
 doi:[10.1111/arcm.12264](https://doi.org/10.1111/arcm.12264)</span>
 
-<span class="csl-left-margin">97.
+<span class="csl-left-margin">101.
 </span><span class="csl-right-inline">Agam A, Zupancich A. Interpreting
 the Quina and demi-Quina scrapers from Acheulo-Yabrudian Qesem Cave,
 Israel: Results of raw materials and functional analyses. Journal of
 Human Evolution. 2020;144: 102798.
 doi:[10.1016/j.jhevol.2020.102798](https://doi.org/10.1016/j.jhevol.2020.102798)</span>
 
-<span class="csl-left-margin">98.
+<span class="csl-left-margin">102.
 </span><span class="csl-right-inline">Roth BJ, Dibble HL. Production and
 Transport of Blanks and Tools at the French Middle Paleolithic Site of
 Combe-Capelle Bas. American Antiquity. 1998;63: 47–62. </span>
 
-<span class="csl-left-margin">99.
+<span class="csl-left-margin">103.
 </span><span class="csl-right-inline">Faivre G-P, Gravina B, Bourguignon
 L, Discamps E, Turq A. Late Middle Palaeolithic lithic technocomplexes
 (MIS 5-3) in the northeastern Aquitaine Basin: Advances and challenges.
 Quaternary International. 2017;433: 116–131.
 doi:[10.1016/j.quaint.2016.02.060](https://doi.org/10.1016/j.quaint.2016.02.060)</span>
 
-<span class="csl-left-margin">100.
+<span class="csl-left-margin">104.
 </span><span class="csl-right-inline">Porraz G. Middle Paleolithic
 mobile toolkits in short-term human occupations: Two case studies.
 Eurasian Prehistory. 2009;6: 33–55. </span>
