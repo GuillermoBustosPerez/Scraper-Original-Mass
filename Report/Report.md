@@ -2025,7 +2025,8 @@ suggestions to strength the analysis, test for overfitting and reviewed
 the early version of the manuscript. Etienne Nouraud helped test the
 first online deployment of the Original Scraper Mass Calculator and made
 suggestions for its improvement. We would like to thank both reviewers
-made important suggestions to improve and clarify the manuscript.  
+made important suggestions to improve and clarify the manuscript.
+
  
 
 ## 1.8 **7. References**
