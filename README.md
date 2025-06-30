@@ -37,7 +37,12 @@ Predicting the original mass of a retouched scraper has long been a major goal i
 
 The following repository is organized following the structure of a *research compendium* (Marwick et al., 2018). The [**Report**](Report) folder contains all data, images and complete workflow to reproduce the current research. Within this folder the following subfolders can be found:   
 
-  * [**Data**](Report/Data): contains *images from microscopes* used for analysis, along with the RData files containing the extracted metric features of each image and microscope type.    
+  * [**Data**](Report/Data): contains all data used for training the machine learning models.    
+  * [**Models**](Report/Models): contains the models trained for predicting original flake mass.    
+
+The manuscript is made available as a [**.md**](Report/Report.md) or as a [**.Rmd**](Report/Report.Rmd) file. These files contain the complete workflow to reproduce the analysis.   
+ 
+
 
 
 
